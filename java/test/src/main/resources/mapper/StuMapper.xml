@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test.demo.dao.StuMapper">
+  <!--<resultMap id="BaseResultMap" type="test.demo.bean.Stu">-->
+    <!--<id column="id" jdbcType="VARCHAR" property="id" />-->
+    <!--<result column="age" jdbcType="VARCHAR" property="age" />-->
+    <!--<result column="name" jdbcType="VARCHAR" property="name" />-->
+    <!--<result column="sex" jdbcType="VARCHAR" property="sex" />-->
+  <!--</resultMap>-->
+
+  <select id="userList" resultType="test.demo.bean.Stu">
+    select * from stu
+  </select>
+
+  <select id="info" resultType="test.demo.bean.Stu" parameterType="test.demo.bean.Stu">
+    select
+    *
+    from stu where id = #{id}
+  </select>
+
+  <insert id="insertData" useGeneratedKeys="true" keyProperty="id" parameterType="test.demo.bean.Stu">
+    insert into stu(name, age, sex)
+    values(#{name},#{age},#{sex})
+  </insert>
+
+  <update id="updateData" parameterType="test.demo.bean.Stu" >
+    update stu set name=#{name},age=#{age},sex=#{sex} where id=#{id}
+  </update>
+
+  <delete id="deleteData" parameterType="test.demo.bean.Stu">
+    delete from stu where id=#{id}
+  </delete>
+
+</mapper>
