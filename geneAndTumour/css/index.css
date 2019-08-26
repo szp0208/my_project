@@ -1,0 +1,595 @@
+@charset "utf-8";
+#app {
+    position: relative;
+    min-width: 1250px;
+}
+.header {
+    min-width: 1250px;
+    width: 100%;
+    height: 80px;
+    border-bottom: 1px solid #dcdcdc;
+    background-color: #fff;
+}
+.contain {
+    width: 100%;
+    padding: 1px 0;
+}
+.header_logo {
+    float: left;
+    width: 400px;
+    margin: 18px 0 0 50px;
+    cursor: pointer;
+}
+.header_logo span {
+    float: left;
+    line-height: 45px;
+    font-size: 24px;
+}
+.header_logo img {
+    float: right;
+    width: 45px;
+    height: 45px;
+}
+.header_nav {
+    float: right;
+    width: 700px;
+}
+.header_nav li {
+    float: left;
+    width: 100px;
+    text-align: center;
+    line-height: 80px;
+    cursor: pointer;
+}
+.header_nav li:hover {
+    color: #44B8A5;
+}
+.header_nav .header_nav_show {
+    color: #44B8A5;
+    border-bottom: 3px solid #44B8A5;
+}
+/*首页样式*/
+.h_search {
+    width: 750px;
+    margin: 200px auto 0;
+}
+.h_search h3 {
+    width: 750px;
+    height: 90px;
+}
+.h_search h3 span {
+    float: left;
+    line-height: 90px;
+    font-size: 44px;
+}
+.h_search h3 img {
+    float: right;
+    width: 90px;
+    height: 90px;
+}
+.h_search .el-autocomplete, .h_search .btn {
+    float: left;
+}
+.h_search .el-autocomplete {
+    float: left;
+    width: 560px;
+    margin-right: 10px;
+}
+.h_search .btn {
+    float: left;
+    width: 150px;
+}
+.genes {
+    margin: 50px 0 0 50px;
+}
+.g_tit {
+    margin-bottom: 50px;
+}
+.g_tit h3 {
+    font-size: 36px;
+    font-weight: bold;
+}
+.g_tit h3:before {
+    content: '';
+    float: left;
+    width: 5px;
+    height: 30px;
+    margin: 5px;
+    background-color: #44B8A5;
+}
+.g_tit p {
+    padding: 20px 0 0 50px;
+}
+.g_contain {
+    padding-left: 50px;
+}
+.g_h3 {
+    font-size: 24px;
+}
+.g_contain h3 .g_h3_show {
+    color: #409EFF;
+    background: #ecf5ff;
+    border-color: #b3d8ff;
+}
+.g_con_lis {
+    width: 1210px;
+    margin: 50px auto 100px;
+}
+.g_con_lis h3 {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 16px;
+}
+.g_con_lis h3 span {
+    font-weight: bold;
+}
+.g_con_left, .g_con_right {
+    position: relative;
+    float: left;
+    width: 600px;
+    height: 600px;
+    border: 1px solid #dcdcdc;
+}
+.g_con_left {
+    margin-right: 5px;
+}
+.g_con_left img, .g_con_right img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.g_con_lis_1, .g_con_lis_2, .g_con_lis_3 {
+    width: 100%;
+    height: 100%;
+}
+.g_con_lis_2, .g_con_lis_3 {
+    width: 600px;
+    margin: 0 auto;
+}
+.g_con_lis_2 .inline-input, .g_con_lis_3 .select_search {
+    width: 400px;
+}
+.g_con_lis_cen {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+}
+.g_con_lis_cen img {
+    display: block;
+    width: 100%;
+}
+/*详情页面*/
+.d_side_edge {
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    width: 200px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 0 5px #999;
+}
+.d_contain {
+    min-width: 750px;
+    margin: 50px 50px 0 300px;
+}
+.d_contain h3 {
+    margin-bottom: 10px;
+    color: #AEA5D4;
+    font-size: 36px;
+    text-align: center;
+    line-height: 50px;
+}
+.d_con {
+    background-color: #fff;
+}
+.d_con_ul h4 {
+    margin-bottom: 15px;
+    color: #44B8A5;
+    font-size: 28px;
+}
+.d_con_ul h4 span {
+    margin: 6px 2px 0 0;
+    float: left;
+    color: #ccc;
+    font-size: 18px;
+}
+.d_con_ul>li {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px #999;
+}
+.d_con_li_1 {
+    padding-left: 15px;
+}
+.d_con_li_1 label {
+    width: 100px;
+    float: left;
+    margin-right: 5px;
+    font-weight: bold;
+    text-align: right;
+}
+.d_con_li_1 p {
+    padding-left: 105px;
+    color: #444;
+    line-height: 28px;
+}
+.d_con_li_2 label {
+    /*margin: 5px 5px;*/
+}
+.d_con_li_2 .el-collapse-item__header, .d_con_li_3 .el-collapse-item__header {
+    font-weight: bold;
+    font-size: 14px;
+}
+.d_gene_map_table {
+    width: 730px;
+    margin: 0 auto;
+}
+.d_con_li_4 .d_label {
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+.d_con_li_sel {
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+}
+.d_con_li_sel_li {
+    margin: 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #dcdcdc;
+}
+.d_con_li_sel_li>div {
+    float: left;
+    margin-right: 10px;
+}
+.return_top {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    background: url("../img/top.png") no-repeat;
+    background-size: contain;
+    cursor: pointer;
+}
+/*基因*/
+.g_con_li_2 h5 {
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+}
+.g_con_li_2_sel {
+    margin-top: 30px;
+}
+.g_con_li_2_sel>li {
+    position: relative;
+    float: left;
+    width: 300px;
+    height: 35px;
+    padding: 10px;
+    margin: 0 10px 30px 0;
+    border: 1px solid #dcdcdc;
+}
+.g_con_li_2_sel_name {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    width: 260px;
+    height: 30px;
+    margin-left: -130px;
+    background-color: #fff;
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+}
+.g_con_li_2_li1, .g_con_li_2_li2 {
+    width: 100%;
+    height: 500px;
+}
+.g_con_li_3_sel {
+    position: relative;
+    float: left;
+    width: 300px;
+    padding: 10px;
+    margin: 100px 30px 10px 0;
+    border: 1px solid #dcdcdc;
+}
+.g_con_li_3_sel .el-checkbox {
+    display: block;
+    width: 200px;
+    margin-bottom: 10px;
+}
+.g_con_li_3_img {
+    float: left;
+    width: 400px;
+    min-height: 100px;
+}
+.g_con_li_3_img img {
+    display: block;
+    width: 100%;
+}
+.d_tab th, .d_tab td {
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+}
+.tab_text {
+    color: #397fd4;
+}
+
+/*矩形图*/
+.bar_map {
+    position: relative;
+    width: 400px;
+    min-height: 300px;
+    margin-top: 20px;
+    padding-left: 50px;
+}
+.bar_scale span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 1px;
+    /*background: #aaa;*/
+    color: #999;
+    line-height: 1px;
+    text-indent: 8px;
+}
+.bar_scale span:nth-child(5) {
+    top: 0;
+}
+.bar_scale span:nth-child(4) {
+    top: 60px;
+}
+.bar_scale span:nth-child(3) {
+    top: 120px;
+}
+.bar_scale span:nth-child(2) {
+    top: 180px;
+}
+.bar_scale span:nth-child(1) {
+    top: 240px;
+}
+.bar_lis {
+    position: relative;
+    float: left;
+    width: 80px;
+    margin-right: 30px;
+}
+.bar_lis:after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    width: 50px;
+    height: 1px;
+    background-color: #444;
+    margin-left: -25px;
+}
+.bar_lis:before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    width: 50px;
+    height: 1px;
+    background-color: #444;
+    margin-left: -25px;
+}
+.bar_lis_sp, .bar_lis_em {
+    display: block;
+    width: 50%;
+    border-right: 1px dashed #999;
+}
+.bar_lis_st {
+    display: block;
+    width: 100%;
+    background-color: #39f;
+    border: 1px solid #999;
+}
+.bar_lis_i {
+    display: block;
+    widows: 100%;
+    border-bottom: 1px solid #444;
+}
+.bar_map_tips {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+/*冷热图css*/
+.d_gene_map {
+    position: relative;
+    width: 700px;
+    margin: 0 0 50px 160px;
+}
+.d_gene_map ul {
+    width: 100%;
+}
+.d_gene_map li {
+    position: relative;
+    width: 100%;
+    height: 40px;
+}
+.d_gene_map li h3 {
+    position: absolute;
+    left: -160px;
+    top: 0;
+    width: 150px;
+    height: 23px;
+    margin: 0;
+    color: #444;
+    font-size: 12px;
+    text-align: right;
+    line-height: 23px;
+}
+.d_gene_map_div {
+    overflow-x: scroll;
+    width: 100%;
+    height: 100%;
+}
+.d_gene_map_div p {
+    min-width: 100%;
+    height: 100%;
+}
+.d_gene_map_div span {
+    float: left;
+    width: 10px;
+    height: 20px;
+    border: 1px solid #dcdcdc;
+    cursor: pointer;
+}
+.d_gene_color {
+    position: absolute;
+    left: -160px;
+    top: 0;
+    width: 12px;
+    height: 200px;
+    z-index: 2;
+}
+.d_gene_color span {
+    display: block;
+    width: 100%;
+    height: 10px;
+}
+.d_gene_color strong:nth-child(1) {
+    position: absolute;
+    top: 30px;
+    right: -20px;
+}
+.d_gene_color strong:nth-child(2) {
+    position: absolute;
+    top: 90px;
+    right: -20px;
+}
+.d_gene_color strong:nth-child(3) {
+    position: absolute;
+    top: 148px;
+    right: -25px;
+}
+/*散点图*/
+.scatter_plot {
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+}
+/*小圆圈点击图*/
+.genes_circles_map_1, .genes_circles_map_2, .tumor_circles_map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.genes_circles_map_1 span, .genes_circles_map_2 span, .tumor_circles_map span {
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.genes_circles_map_tips li {
+    font-size: 16px;
+    line-height: 28px;
+    height: 28px;
+}
+.genes_circles_map_tips li strong {
+    float: left;
+}
+.genes_circles_map_tips li span {
+    float: right;
+    cursor: pointer;
+}
+/*肿瘤小圈圈点击图*/
+.km_plot_map_img {
+    position: relative;
+    width: 600px;
+    min-height: 300px;
+    margin: 0 auto;
+}
+.km_plot_map_img img {
+    display: block;
+    width: 600px;
+}
+.km_plot_map_div {
+    position: absolute;
+    top: 60px;
+    right: 30px;
+    width: 508px;
+    height: 286px;
+}
+.km_plot_map_div div {
+    position: relative;
+    width: 96.15%;
+    height: 100%;
+    margin-left: 10px;
+}
+.km_plot_map_div span {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background-color: #000;
+}
+/*others style*/
+.router_downloads, .router_about_us, .router_contact, .router_tutorail {
+    padding: 50px;
+}
+.content_p p {
+    font-size: 18px;
+    line-height: 28px;
+}
+.copyright {
+    position: relative;
+    height: 28px;
+}
+.copyright div {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+}
+.copyright p {
+    margin-left: -50%;
+}
+.copyright p span {
+    float: left;
+}
+.copyright p a {
+    float: left;
+    color: #397fd4;
+    margin-right: 20px;
+}
+/*选择框排列顺序*/
+.contain .el-checkbox-group {
+    float: left;
+}
+.contain .el-checkbox+.el-checkbox {
+    margin-left: 0;
+    margin-right: 5px;
+}
+.contain .el-checkbox {
+    float: left;
+    min-width: 130px;
+}
+/* 2019-04-28新增样式 */
+.km_tit span {
+    float: left;
+    width: 65px;
+    height: 28px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    line-height: 28px;
+    text-align: center;
+    cursor: pointer;
+}
+.km_tit .sp_show {
+    border-color: #66b1ff;
+    background-color: #66b1ff;
+    color: #fff;
+}

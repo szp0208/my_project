@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>ACdb</title>
+        <link rel="shortcut icon" href="icon.ico" />
+        <link rel="stylesheet" type="text/css" href="css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="libs/element/element.css" />
+        <link rel="stylesheet" type="text/css" href="libs/nprogress/nprogress.css" />
+        <link rel="stylesheet" type="text/css" href="css/common.css" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <style type="text/css">
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="header" v-cloak>
+                <h2 class="header_logo"><span>Autophagy and Tumor Database</span><img src="img/icon.png" alt="" /></h2>
+                <ul class="header_nav">
+                    <li v-for="n in navList" :class="{header_nav_show: n.name==navShow}" @click="jumpRouter(n.name)">{{n.name}}</li>
+                </ul>
+            </div>
+            <div class="contain">
+                <router-view></router-view>
+            </div>
+            <div class="copyright">
+                <div>
+                    <p>
+                        <a href="http://www.zju.edu.cn/english/">Zhejiang University</a>
+                        <a href="http://www.cmm.zju.edu.cn/index.php?web=english&pc=1">Zhejiang University School of Medicine</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Homepage -->
+        <script type="text/x-template" id="homepage">
+            <div class="homepage">
+                <div class="h_search">
+                    <h3><span>Autophagy and Tumor Database</span><img src="img/icon.png" alt="" /></h3>
+                    <div style="text-align:center;">
+                        <el-autocomplete
+                            popper-class="my-autocomplete"
+                            v-model="searchVal"
+                            :fetch-suggestions="querySearch"
+                            placeholder="Please input"
+                            @select="handleSelect">
+                            <template slot-scope="{ item }">
+                                <div class="name">{{ item.name }}</div>
+                            </template>
+                        </el-autocomplete>
+                        <el-button type="primary" @click="btnSearch" icon="el-icon-search" class="btn" :disabled="btnJud">Autophage it!</el-button>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!-- Genes -->
+        <script type="text/x-template" id="genes">
+            <div class="genes">
+                <div class="g_tit">
+                    <h3>Genes</h3>
+                    <p>In this section, we listed all the genes included in this web tool.</p>
+                </div>
+                <div class="g_contain">
+                    <h3>
+                        <span class="g_h3">Browse by:</span>
+                        <el-button :class="{g_h3_show: listName==1}" @click="select_lis(1)">Illustration</el-button>
+                        <el-button :class="{g_h3_show: listName==2}" @click="select_lis(2)">Search</el-button>
+                        <el-button :class="{g_h3_show: listName==3}" @click="select_lis(3)">Dropdown list</el-button>
+                    </h3>
+                    <div class="g_con_lis clearfix">
+                        <h3><span>Caution: </span> Only several genes are displayed in the figure below. For more infomation, please browse by Search OR Dropdown list. </h3>
+                        <div class="g_con_lis_1" v-if="listName==1">
+                            <el-dialog
+                                title="Please choose"
+                                :visible.sync="dialogVisible"
+                                width="30%">
+                                <ul class="genes_circles_map_tips">
+                                    <li v-for="l in clickMapList"><strong>{{l.name}}</strong><span class="tab_text" @click="clickCirclesMap(l)">Get into</span></li>
+                                </ul>
+                            </el-dialog>
+
+                            <div class="g_con_left">
+                                <img src="img/Autophagy pathway.jpg" alt="" />
+                                <div class="genes_circles_map_1"><span v-for="c in maplist_1" :style="c.sty" @click="clickCirclesMap(c)"></span></div>
+                            </div>
+                            <div class="g_con_right">
+                                <img src="img/Mitophagy pathway.jpg" alt=""/>
+                                <div class="genes_circles_map_2"><span v-for="c in maplist_2" :style="c.sty" @click="clickCirclesMap(c)"></span></div>
+                            </div>
+                        </div>
+                        <div class="g_con_lis_2" v-if="listName==2">
+                            <el-autocomplete  class="inline-input"
+                                popper-class="my-autocomplete"
+                                v-model="searchVal"
+                                :fetch-suggestions="querySearch"
+                                placeholder="Please input"
+                                @select="handleSelect">
+                                <template slot-scope="{ item }">
+                                    <div class="name">{{ item.name }}</div>
+                                </template>
+                            </el-autocomplete>
+                            <el-button type="primary" icon="el-icon-search" class="btn" :disabled="btnJud" @click="clickSearch()">Continue</el-button>
+                        </div>
+                        <div class="g_con_lis_3" v-if="listName==3">
+                            <el-select v-model="selectData" placeholder="Please choose" class="select_search">
+                                <el-option
+                                    v-for="item in restaurants"
+                                    :key="item.id"
+                                    :label="item.name"
+                                    :value="item">
+                                </el-option>
+                            </el-select>
+                            <el-button type="primary" icon="el-icon-search" class="btn" @click="clickSearch_()">Continue</el-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!-- Tumors -->
+        <script type="text/x-template" id="tumors">
+            <div class="tumors">
+                <div class="genes">
+                    <div class="g_tit">
+                        <h3>Tumors</h3>
+                        <p>In this section, we listed all the tumors included in this web tool.</p>
+                    </div>
+                    <div class="g_contain">
+                        <h3>
+                            <span class="g_h3">Browse by:</span>
+                            <el-button :class="{g_h3_show: listName==1}" @click="select_lis(1)">Illustration</el-button>
+                            <el-button :class="{g_h3_show: listName==2}" @click="select_lis(2)">Search</el-button>
+                            <el-button :class="{g_h3_show: listName==3}" @click="select_lis(3)">Dropdown list</el-button>
+                        </h3>
+                        <div class="g_con_lis clearfix">
+                            <h3><span>Caution: </span> Only several tumors are displayed in the figure below. For more infomation, please browse by Search OR Dropdown list.</h3>
+                            <div class="g_con_lis_1" v-if="listName==1">
+                                <el-dialog
+                                    title="Please choose"
+                                    :visible.sync="dialogVisible"
+                                    width="30%">
+                                    <ul class="genes_circles_map_tips">
+                                        <li v-for="l in clickMapList"><strong>{{l.name}}</strong><span class="tab_text" @click="clickCirclesMap(l)">Get into</span></li>
+                                    </ul>
+                                </el-dialog>
+                                <div class="g_con_lis_cen">
+                                    <img src="img/anatomic.png" alt="" />
+                                    <div class="tumor_circles_map"><span v-for="c in maplist_1" :style="c.sty" @click="clickCirclesMap(c)"></span></div>
+                                </div>
+                            </div>
+                            <div class="g_con_lis_2" v-if="listName==2">
+                                <el-autocomplete  class="inline-input"
+                                    popper-class="my-autocomplete"
+                                    v-model="searchVal"
+                                    :fetch-suggestions="querySearch"
+                                    placeholder="Please input"
+                                    @select="handleSelect">
+                                    <template slot-scope="{ item }">
+                                        <div class="name">{{ item.name }}</div>
+                                    </template>
+                                </el-autocomplete>
+                                <el-button type="primary" icon="el-icon-search" class="btn" :disabled="btnJud" @click="clickSearch()">Continue</el-button>
+                            </div>
+                            <div class="g_con_lis_3" v-if="listName==3">
+                                <el-select v-model="selectData" placeholder="Please choose" class="select_search">
+                                    <el-option
+                                        v-for="item in restaurants"
+                                        :key="item.id"
+                                        :label="item.name"
+                                        :value="item">
+                                    </el-option>
+                                </el-select>
+                                <el-button type="primary" icon="el-icon-search" class="btn" @click="clickSearch_()">Continue</el-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!--柱状图组�?-->
+        <script type="text/x-template" id="bar_map">
+            <div class="bar_map clearfix" :style="'width:' + (type == 4?drawBar.bars.length * 200 + 'px':(type == 2?'450px':'240px'))">
+                <h3 v-if="type != 4" style="position: absolute;top: -32px; left: 0; width: 100%; text-align: center;">{{data.gene}}</h3>
+                <div class="bar_scale">
+                    <span v-for="(l, index) in drawBar.line" :style="'top: '+ ((drawBar.line.length - index - 1) * drawBar.scaleHeight) +'px'">{{l | n}}</span>
+                </div>
+                <div class="bar_lis" v-for="(b, index) in drawBar.bars" :style="b.top">
+                    <span class="bar_lis_sp" :style="b.maxH"></span>
+                        <el-popover trigger="hover" placement="top" popper-class="bar_map_tips">
+                            <ul v-if="type != '4'">
+                                <li v-for="i in drawBar.bars" style="border-bottom: 1px solid #dcdcdc;">
+                                    <h3 style="font-size: 16px;">{{i.data.name}}</h3>
+                                    <p>N：{{i.data.n | n}}</p>
+                                    <p>mean ± SD：{{i.data.mean | n}} ± {{i.data.sd | n}}</p>
+                                </li>
+                                <li>
+                                    <p>FC：{{data.logFC | n}}</p>
+                                    <p>P_value：{{data.P_Value}}</p>
+                                </li>
+                            </ul>
+                            <ul v-if="type == '4'">
+                                <li style="border-bottom: 1px solid #dcdcdc;">
+                                    <h3 style="font-size: 16px;">{{b.data.name}}</h3>
+                                    <p>N：{{b.data.n | n}}</p>
+                                    <p>mean ± SD：{{b.data.mean | n}} ± {{b.data.sd | n}}</p>
+                                </li>
+                            </ul>
+                            <strong class="bar_lis_st" :style="b.barH" slot="reference">
+                                <i class="bar_lis_i" :style="b.medH"></i>
+                            </strong>
+                        </el-popover>
+                    <em class="bar_lis_em" :style="b.minH"></em>
+                    <p style="position: absolute; bottom: -30px; left: 0; width: 100%; text-align: center;">{{b.data.name}}</p>
+                </div>
+            </div>
+        </script>
+
+        <!--冷热图组�?-->
+        <script type="text/x-template" id="color-map">
+            <div class="d_gene_map">
+                <div class="d_gene_color">
+                    <strong>0.5</strong>
+                    <strong>0</strong>
+                    <strong>-0.5</strong>
+                    <span v-for="(i, index) in 20" :style="'background-color:' + colorArr[index]"></span>
+                </div>
+                <ul>
+                    <li v-for="x in data">
+                        <div class="d_gene_map_div">
+                            <p :style="'width:' + (12 * x.len) + 'px'">
+                                <el-tooltip class="item" effect="dark" :content="b.symbol" placement="top-start" v-for="b in x.list">
+                                    <span @click="clickBar(b)" :style="'background-color:' + changeColor(b.correlation_coefficent)"></span>
+                                </el-tooltip>
+                            </p>
+                        </div>
+                        <h3>{{x.tumor_name?x.tumor_name:x.gene_name}}</h3>
+                    </li>
+                </ul>
+                <el-dialog
+                    title=""
+                    :visible.sync="dialogVisible"
+                    width="50%"
+                    @opened="dialogOpened(this, 1)"
+                    :before-close="function(done) {done()}">
+                    <div class="scatter_plot" :class="'scatter_plot_' + type"></div>
+                </el-dialog>
+            </div>
+        </script>
+
+        <!--tumour_details-->
+        <script type="text/x-template" id="tumour_details">
+        	<div class="tumour_details">
+        	    <div class="d_side_edge">
+        	        <el-menu
+                        default-active="2"
+                        :default-openeds="['2']"
+                        class="el-menu-vertical-demo"
+                        @open="handleOpen"
+                        @select="handleSelect"
+                        @close="handleClose">
+                        <el-menu-item index="1">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">Brief Summary</span>
+                        </el-menu-item>
+                        <el-submenu index="2">
+                            <template slot="title">
+                                <i class="el-icon-location"></i>
+                                <span>Gene Expression</span>
+                            </template>
+                                <el-menu-item-group>
+                                    <el-menu-item index="2-1">Normal/Tumor</el-menu-item>
+                                    <el-menu-item index="2-2">Stage</el-menu-item>
+                                    <el-menu-item index="2-3">Survival</el-menu-item>
+                                </el-menu-item-group>
+                        </el-submenu>
+                        <el-menu-item index="3">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">Correlation</span>
+                        </el-menu-item>
+                        <el-menu-item index="4">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">KM-plot</span>
+                        </el-menu-item>
+                        <el-menu-item index="5">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">Clinical Trial</span>
+                        </el-menu-item>
+                    </el-menu>
+                    <div class="return_top" @click="returnTop"></div>
+        	    </div>
+        	    <div class="d_contain">
+        	        <h3>{{tumorInfo.full_name}}</h3>
+        	        <div class="d_con">
+        	            <ul class="d_con_ul">
+        	                <li>
+        	                    <h4 class="scrolltit_1">Brief Summary</h4>
+        	                    <div class="d_con_li_1">
+        	                    	<div class="group_line clearfix">
+        	                    		<label for="" class="left">Mesh term:</label>
+        	                    		<a :href="tumorInfo.mesh_term_href"><span class="left operate_text">{{tumorInfo.mesh_term}}</span></a>
+        	                    	</div>
+        	                    	<div class="group_line clearfix">
+                                        <label for="" class="left">Summary:</label>
+                                        <p>{{tumorInfo.summary}}</p>
+                                    </div>
+        	                    </div>
+        	                </li>
+        	                <li>
+        	                    <h4 class="scrolltit_2">Gene Expression</h4>
+        	                    <div class="d_con_li_2">
+        	                        <el-collapse v-model="activeNames" @change="handleChange">
+                                      <!--  <el-collapse-item title="Gene Selection" name="1">
+                                            <el-checkbox :indeterminate="ge_gs.isIndeterminate" v-model="ge_gs.checkAll" @change="handleCheckAllChange">Check All</el-checkbox>
+                                                <div style="margin: 15px 0;"></div>
+                                                <el-checkbox-group v-model="ge_gs.checkedGenes" @change="handleCheckedCitiesChange">
+                                                <el-checkbox v-for="g in ge_gs.genes" :label="g" :key="g.gene_id">{{g.official_symbol}}</el-checkbox>
+                                            </el-checkbox-group>
+                                            <el-button type="primary" @click="sel_geneslist">submit</el-button>
+                                        </el-collapse-item> -->
+                                        <el-collapse-item class="scrolltit_2-1" title="Normal/Tumor" name="2">
+                                            <div style="width: 600px; text-align: center;">Differential expression genes (tumor VS normal tissue)</div>
+                                            <div>
+                                                <el-table
+                                                    border
+                                                    :data="ge_gs.bss.data"
+                                                    @sort-change="changeTabe($event, 1)"
+                                                    @cell-click="clickTable($event, 1)"
+                                                    style="width: 600px;">
+                                                    <el-table-column class="tab_text"
+                                                        prop="gene"
+                                                        label="Gene"
+                                                        sortable="custom"
+                                                        width="180">
+                                                        <template slot-scope="scope">
+                                                            <el-popover trigger="click" placement="top">
+                                                                <bar-map :data="scope.row" type="1"></bar-map>
+                                                                <div slot="reference" class="name-wrapper" style="cursor: pointer;">
+                                                                    <el-tag size="medium">{{ scope.row.gene }}</el-tag>
+                                                                </div>
+                                                            </el-popover>
+                                                        </template>
+                                                    </el-table-column>
+                                                    <el-table-column
+                                                        prop="logFC"
+                                                        label="Fold change (log2)"
+                                                        sortable="custom"
+                                                        width="180">
+                                                        <template slot-scope="scope">
+                                                            <span>{{scope.row.logFC | n}}</span>
+                                                        </template>
+                                                    </el-table-column>
+                                                    <el-table-column
+                                                        prop="P_Value"
+                                                        sortable="custom"
+                                                        label="p value">
+                                                    </el-table-column>
+                                                </el-table>
+                                                <el-pagination
+                                                    @current-change="handleCurrentChange($event, 'bss')"
+                                                    :current-page="ge_gs.bss.page"
+                                                    layout="total, prev, pager, next"
+                                                    :total="ge_gs.bss.totalNum">
+                                                </el-pagination>
+                                            </div>
+                                        </el-collapse-item>
+                                        <el-collapse-item class="scrolltit_2-2" title="By stage" name="3">
+                                            <div style="width: 600px; text-align: center;">Differential expression genes (stage-IV VS stage-I)</div>
+                                            <div>
+                                                <el-table
+                                                    border
+                                                    :data="ge_gs.bs.data"
+                                                    @sort-change="changeTabe($event, 2)"
+                                                    @cell-click="clickTable($event, 2)"
+                                                    style="width: 600px;">
+                                                    <el-table-column
+                                                        prop="gene"
+                                                        label="Gene"
+                                                        sortable="custom"
+                                                        width="180">
+                                                        <template slot-scope="scope">
+                                                            <el-popover trigger="click" placement="top">
+                                                                <bar-map :data="scope.row" type="2"></bar-map>
+                                                                <div slot="reference" class="name-wrapper" style="cursor: pointer;">
+                                                                    <el-tag size="medium">{{ scope.row.gene }}</el-tag>
+                                                                </div>
+                                                            </el-popover>
+                                                        </template>
+                                                    </el-table-column>
+                                                    <el-table-column
+                                                        prop="logFC"
+                                                        label="Fold change"
+                                                        sortable="custom"
+                                                        width="180">
+                                                        <template slot-scope="scope">
+                                                            <span>{{scope.row.logFC | n}}</span>
+                                                        </template>
+                                                    </el-table-column>
+                                                    <el-table-column
+                                                        prop="P_Value"
+                                                        sortable="custom"
+                                                        label="p value">
+                                                    </el-table-column>
+                                                </el-table>
+                                                <el-pagination
+                                                    @current-change="handleCurrentChange($event, 'bs')"
+                                                    :current-page="ge_gs.bs.page"
+                                                    layout="total, prev, pager, next"
+                                                    :total="ge_gs.bs.totalNum">
+                                                </el-pagination>
+                                            </div>
+                                        </el-collapse-item>
+                                        <el-collapse-item class="scrolltit_2-3" title="By survival" name="4">
+                                            <div style="width: 600px; text-align: center;">Differential expression genes (50-100th VS 0-50th)</div>
+                                            <div>
+                                                <el-table
+                                                    border
+                                                    :data="ge_gs.bsv.data"
+                                                    @sort-change="changeTabe($event, 3)"
+                                                    @cell-click="clickTable($event, 3)"
+                                                    style="width: 600px;">
+                                                    <el-table-column
+                                                        prop="gene"
+                                                        label="Gene"
+                                                        sortable="custom"
+                                                        width="180">
+                                                        <template slot-scope="scope">
+                                                            <el-popover trigger="click" placement="top">
+                                                                <bar-map :data="scope.row" type="3"></bar-map>
+                                                                <div slot="reference" class="name-wrapper" style="cursor: pointer;">
+                                                                    <el-tag size="medium">{{ scope.row.gene }}</el-tag>
+                                                                </div>
+                                                            </el-popover>
+                                                        </template>
+                                                    </el-table-column>
+                                                    <el-table-column
+                                                        prop="logFC"
+                                                        label="Fold change"
+                                                        sortable="custom"
+                                                        width="180">
+                                                        <template slot-scope="scope">
+                                                            <span>{{scope.row.logFC | n}}</span>
+                                                        </template>
+                                                    </el-table-column>
+                                                    <el-table-column
+                                                        prop="P_Value"
+                                                        sortable="custom"
+                                                        label="p value">
+                                                    </el-table-column>
+                                                </el-table>
+                                                <el-pagination
+                                                    @current-change="handleCurrentChange($event, 'bsv')"
+                                                    :current-page="ge_gs.bsv.page"
+                                                    layout="total, prev, pager, next"
+                                                    :total="ge_gs.bsv.totalNum">
+                                                </el-pagination>
+                                            </div>
+                                        </el-collapse-item>
+                                    </el-collapse>
+        	                    </div>
+        	                </li>
+        	                <li>
+                                <h4 class="scrolltit_3">Correlation</h4>
+                                <div class="d_con_li_3">
+                                    <el-collapse v-model="activeNames_2" @change="handleChange_2">
+                                        <el-collapse-item title="Filter" name="sel">
+                                            <div class="cl_sel clearfix">
+                                                <ul style="float: left; padding-left: 20px;">
+                                                    <li>
+                                                        <div style="margin: 10px 0;"><el-tag type="warning">genes</el-tag></div>
+                                                        <el-checkbox :indeterminate="cl.filter.isIndeterminate" v-model="cl.filter.checkAll" @change="handleCheckAllChange_cl">Check All</el-checkbox>
+                                                            <div style="margin: 15px 0;"></div>
+                                                            <el-checkbox-group v-model="cl.searchBar.sel_idlist" @change="handleCheckedCitiesChange_cl">
+                                                            <el-checkbox v-for="x in cl.filter.genelist" :label="x" :key="x.gene_id">{{x.official_symbol}}</el-checkbox>
+                                                        </el-checkbox-group>
+                                                    </li>
+                                                    <li>
+                                                        <div style="margin: 10px 0; font-size: 18px;"><el-tag type="warning">correlation_coefficient_absolute_value</el-tag></div>
+                                                        <template>
+                                                            <el-radio v-model="cl.searchBar.cof" label="0.5">>0.5</el-radio>
+                                                            <el-radio v-model="cl.searchBar.cof" label="0.7">>0.7</el-radio>
+                                                            <el-radio v-model="cl.searchBar.cof" label="0.9">>0.9</el-radio>
+                                                        </template>
+                                                    </li>
+                                                    <li>
+                                                        <div style="margin: 10px 0;"><el-tag type="warning">p_value</el-tag></div>
+                                                        <template>
+                                                            <el-radio v-model="cl.searchBar.pv" label="0.01"><0.01</el-radio>
+                                                            <el-radio v-model="cl.searchBar.pv" label="0.05"><0.05</el-radio>
+                                                            <el-radio v-model="cl.searchBar.pv" label="0.1"><0.1</el-radio>
+                                                        </template>
+                                                    </li>
+                                                </ul>
+                                                <el-button type="primary" style="margin: 10px;" @click="submit_cl_searchBar">submit</el-button>
+                                            </div>
+                                        </el-collapse-item>
+                                        <el-collapse-item title="microRNA ~ gene" name="mRna">
+                                            <div v-loading="cl.mRna.mapDataJud">
+                                                <color-map :data="cl.mRna.mapData" type="2"></color-map>
+                                                <div class="d_gene_map_table">
+                                                    <div style="width: 100%; text-align: center;">Most correlated between miRNA ~ gene</div>
+                                                    <el-table
+                                                        :data="cl.mRna.data"
+                                                        border
+                                                        @sort-change="changeTabe($event, 'mr')"
+                                                        style="width: 100%;">
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="symbol"
+                                                            label="miRNA">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="correlation_coefficent"
+                                                            label="correlation coefficient">
+                                                            <template slot-scope="scope">
+                                                                <span>{{scope.row.correlation_coefficent | n(3)}}</span>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="p_value"
+                                                            label="p value">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="gene_name"
+                                                            label="gene">
+                                                        </el-table-column>
+                                                    </el-table>
+                                                    <el-pagination
+                                                        @current-change="handleCurrentChange($event, 'mr')"
+                                                        :current-page="cl.mRna.page"
+                                                        layout="total, prev, pager, next"
+                                                        :total="cl.mRna.totalNum">
+                                                    </el-pagination>
+                                                </div>
+                                            </div>
+                                        </el-collapse-item>
+                                        <el-collapse-item title="transcription factor ~ gene" name="tfRna">
+                                            <div v-loading="cl.tfRna.mapDataJud">
+                                                <color-map :data="cl.tfRna.mapData" type="1"></color-map>
+                                                <div class="d_gene_map_table">
+                                                    <div style="width: 100%; text-align: center;">Most correlated between TF ~ gene</div>
+                                                    <el-table
+                                                        :data="cl.tfRna.data"
+                                                        border
+                                                        @sort-change="changeTabe($event, 'tfg')"
+                                                        style="width: 100%;">
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="symbol"
+                                                            label="TF">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="correlation_coefficent"
+                                                            label="correlation coefficient">
+                                                            <template slot-scope="scope">
+                                                                <span>{{scope.row.correlation_coefficent | n(3)}}</span>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="p_value"
+                                                            label="value">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="gene_name"
+                                                            label="gene">
+                                                        </el-table-column>
+                                                    </el-table>
+                                                    <el-pagination
+                                                        @current-change="handleCurrentChange($event, 'tfg')"
+                                                        :current-page="cl.tfRna.page"
+                                                        layout="total, prev, pager, next"
+                                                        :total="cl.tfRna.totalNum">
+                                                    </el-pagination>
+                                                </div>
+                                            </div>
+                                        </el-collapse-item>
+                                        <el-collapse-item title="lncRNA ~ gene" name="lRna">
+                                            <div v-loading="cl.lRna.mapDataJud">
+                                                <color-map :data="cl.lRna.mapData" type="0"></color-map>
+                                                <div class="d_gene_map_table">
+                                                    <div style="width: 100%; text-align: center;">Most correlated between lncRNA ~ gene</div>
+                                                    <el-table
+                                                        :data="cl.lRna.data"
+                                                        border
+                                                        @sort-change="changeTabe($event, 'lr')"
+                                                        style="width: 100%;">
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="symbol"
+                                                            label="LncRNA">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="correlation_coefficent"
+                                                            label="Correlation coefficent">
+                                                            <template slot-scope="scope">
+                                                                <span>{{scope.row.correlation_coefficent | n(3)}}</span>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="p_value"
+                                                            label="value">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="gene_name"
+                                                            label="gene">
+                                                        </el-table-column>
+                                                    </el-table>
+                                                    <el-pagination
+                                                        @current-change="handleCurrentChange($event, 'lr')"
+                                                        :current-page="cl.lRna.page"
+                                                        layout="total, prev, pager, next"
+                                                        :total="cl.lRna.totalNum">
+                                                    </el-pagination>
+                                                </div>
+                                            </div>
+                                        </el-collapse-item>
+                                    </el-collapse>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_4">KM-plot</h4>
+                                <h5 class="km_tit clearfix"><span @click="changeKMTb(1)" :class="{'sp_show':km_jud==1}">TCGA</span><span @click="changeKMTb(2)" :class="{'sp_show':km_jud==2}">GEO</span></h5>
+                                <div class="d_con_li_" v-show="km_jud==2">
+                                    <div class="group_line clearfix">
+                                        <div class="group_line">
+                                            <label for="" class="d_label left">Dataset filter:</label>
+                                        </div>
+                                        <div class="d_con_li_sel">
+                                            <div class="d_con_li_sel_li clearfix">
+                                                <div>
+                                                    <el-radio style="margin: 0 15px 0 0" v-model="km_GEO.selData" v-for="(r, index) in km_GEO.selArr" :label="r">{{r.GSE_platform}}</el-radio>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group_line" style="margin-top: 10px;">
+                                        <el-button style="float: right;" type="primary" @click="submit_searchBar_km2">submit</el-button>
+                                        <el-select style="float: right;" v-model="km_GEO.geneFilter" placeholder="Gene filter">
+                                            <el-option
+                                                v-for="x in km_GEO.geneFilterData"
+                                                :key="x.gene_id"
+                                                :label="x.gene"
+                                                :value="x.gene_id">
+                                            </el-option>
+                                        </el-select>
+                                    </div>
+                                    <div class="km_plot_map clearfix">
+                                        <div id="km_GEO_map" style="width: 700px; margin: 0 auto;" v-loading="km_GEO.loading"></div>
+                                    </div>
+                                </div>
+                                <div class="d_con_li_4" v-show="km_jud==1">
+                                    <div class="group_line clearfix">
+                                        <div class="group_line">
+                                            <label for="" class="d_label left">Population filter:</label>
+                                        </div>
+                                        <div class="d_con_li_sel">
+                                            <div class="d_con_li_sel_li clearfix" v-for="(item, index) in km_plot.selArr">
+                                                <div>
+                                                    <el-select v-model="item.population_type" placeholder="Please choose" @change="sel_population(item, index)">
+                                                        <el-option
+                                                            v-for="x in km_plot.population_selData"
+                                                            :key="x.population_type"
+                                                            :label="x.population_type"
+                                                            :value="x.population_type">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                                <div v-if="item.screen_dataType == 'checkbox'">
+                                                    <el-checkbox style="float: left; margin-right: 10px;" :indeterminate="item.isIndeterminate" v-model="item.checkAll" @change="handleCheckAllChange_(item)">Check All</el-checkbox>
+                                                    <el-checkbox-group style="min-width: 550px;" v-model="item.screen_data" @change="handleCheckedCitiesChange_(item)">
+                                                        <el-checkbox v-for="y in item.screen_dataAll" :label="y" :key="y">{{y}}</el-checkbox>
+                                                    </el-checkbox-group>
+                                                </div>
+                                                <div v-if="item.screen_dataType == 'radio'">
+                                                    <el-radio v-model="item.radioData" v-for="(r, index) in item.screen_dataAll" :label="index">{{r}}</el-radio>
+                                                </div>
+                                                <el-button style="float: right;" type="danger" @click="filterOpearte('delete', index)" icon="el-icon-delete" circle></el-button>
+                                            </div>
+                                        </div>
+                                        <div class="group_line" style="margin-top: 10px;">
+                                            <el-button style="background-color: #409EFF; color: #fff;" @click="filterOpearte('add')" icon="el-icon-plus" circle  :disabled="km_plot.filter_btn"></el-button>
+                                            <el-button style="float: right;" type="primary" @click="submit_searchBar_km">submit</el-button>
+                                            <el-select style="float: right;" v-model="km_plot.geneFilter" placeholder="Gene filter">
+                                                <el-option
+                                                    v-for="x in km_plot.geneFilterData"
+                                                    :key="x.gene_id"
+                                                    :label="x.official_symbol"
+                                                    :value="x.gene_id + '_' + x.official_symbol">
+                                                </el-option>
+                                            </el-select>
+                                        </div>
+                                        <div class="km_plot_map clearfix">
+                                        	<div id="km_plot_map" style="width: 700px; margin: 0 auto;" v-loading="km_plot.loading"></div>
+                                            <div class="km_plot_map_img clearfix" v-if="!km_plot.searchBarData" v-loading="km_plot.imgUrl">
+                                                <img src="" alt="" id="tumor_km_img" />
+                                                <div class="km_plot_map_div">
+                                                    <div>
+                                                        <span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_5">Clinical Trial</h4>
+                                <div class="d_con_li_5">
+                                    <el-table
+                                            :data="CT.data"
+                                            border
+                                            style="width: 100%;">
+                                        <el-table-column
+                                            prop="NCT_number"
+                                            label="NCT_number">
+                                            <template slot-scope="scope">
+                                                <a class="operate_text" :href="scope.row.URL">{{scope.row.NCT_number}}</a>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="title"
+                                                label="correlation title">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="conditions"
+                                                label="conditions">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="phases"
+                                                label="phases">
+                                        </el-table-column>
+                                        <el-table-column
+                                                prop="enrollment"
+                                                label="enrollment">
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-pagination
+                                            @current-change="handleCurrentChange($event, 'CT')"
+                                            :current-page="CT.page"
+                                            layout="total, prev, pager, next"
+                                            :total="CT.totalNum">
+                                    </el-pagination>
+                                </div>
+                            </li>
+        	            </ul>
+        	        </div>
+        	    </div>
+        	</div>
+        </script>
+
+        <!-- genes_details -->
+        <script type="text/x-template" id="genes_details">
+            <div class="genes_details">
+                <div class="d_side_edge">
+                    <el-menu
+                        default-active="1"
+                        class="el-menu-vertical-demo"
+                        @open="handleOpen"
+                        @select="handleSelect"
+                        @close="handleClose">
+                        <el-menu-item index="1">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">General Information</span>
+                        </el-menu-item>
+                        <el-menu-item index="2">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">Expression Profile</span>
+                        </el-menu-item>
+                        <el-menu-item index="3">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">Intracellular Localization</span>
+                        </el-menu-item>
+                        <el-menu-item index="4">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">Correlation</span>
+                        </el-menu-item>
+                        <el-menu-item index="5">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">PTM</span>
+                        </el-menu-item>
+                        <el-menu-item index="6">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">ncRNA Regulation</span>
+                        </el-menu-item>
+                        <el-menu-item index="7">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">Methylation</span>
+                        </el-menu-item>
+                        <el-menu-item index="8">
+                                <i class="el-icon-location"></i>
+                                <span slot="title">Alternative splicing</span>
+                            </el-menu-item>
+                        <el-menu-item index="9">
+                            <i class="el-icon-location"></i>
+                            <span slot="title">Animal model</span>
+                        </el-menu-item>
+                    </el-menu>
+                    <div class="return_top" @click="returnTop"></div>
+                </div>
+                <div class="d_contain">
+                    <h3>{{genesInfo.sum.official_symbol}}</h3>
+                    <div class="d_con">
+                        <ul class="d_con_ul">
+                            <li>
+                                <h4 class="scrolltit_1">General Information</h4>
+                                <div class="d_con_li_1">
+                                    <div class="group_line clearfix">
+                                        <label for="" class="left" style="width: 135px;">Official Symbol:</label>
+                                        <span class="left">{{genesInfo.sum.official_symbol}}</span>
+                                    </div>
+                                    <div class="group_line clearfix">
+                                        <label for="" class="left" style="width: 135px;">Synonyms:</label>
+                                        <span class="left">{{genesInfo.sum.synonyms}}</span>
+                                    </div>
+                                    <div class="group_line clearfix">
+                                        <label for="" class="left" style="width: 135px;">Entrez ID:</label>
+                                        <a :href="genesInfo.sum.entrez_ID_href"><span class="left operate_text">{{genesInfo.sum.entrez_id}}</span></a>
+                                    </div>
+                                    <div class="group_line clearfix">
+                                        <label for="" class="left" style="width: 135px;">Ensemble ID:</label>
+                                        <a :href="genesInfo.sum.ensemble_ID_href"><span class="left operate_text">{{genesInfo.sum.ensemble_id}}</span></a>
+                                    </div>
+                                    <div class="group_line clearfix">
+                                        <label for="" class="left" style="width: 135px;">Summary:</label>
+                                        <p style="padding-left: 140px;">{{genesInfo.sum.summary}}</p>
+                                    </div>
+                                    <!--<div class="group_line clearfix">
+                                        <label for="" class="left" style="width: 155px;">Role in Autophagy:</label>
+                                        <span class="left">Acts as core subunit of the PI3K complex that mediates formation of phosphatidylinositol 3-phosphate.</span>
+                                    </div>-->
+                                    <div class="group_line clearfix">
+                                        <label for="" class="left" style="width: 135px;">External links:</label>
+                                        <span class="left operate_text"><a class="left operate_text" :href="genesInfo.sum.external_links_Uniprot">Uniprot; </a><a class="left operate_text":href="genesInfo.sum.external_links_HGNC">HGNC</a></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_2">Expression Profile</h4>
+                                <div class="g_con_li_2">
+                                    <h5>Expression in Tissues</h5>
+                                    <ul class="g_con_li_2_sel clearfix">
+                                        <li>
+                                            <span class="g_con_li_2_sel_name">Check the pattern to display</span>
+                                            <el-radio v-model="ep.check_2" label="1">Anatomic System</el-radio>
+                                            <el-radio v-model="ep.check_2" label="2">Value</el-radio>
+                                        </li>
+                                        <li>
+                                            <span class="g_con_li_2_sel_name">Check the pattern of data source</span>
+                                            <el-radio v-model="ep.check_3" label="HPA">HPA</el-radio>
+                                            <el-radio v-model="ep.check_3" label="FANTOM5">FANTOM5</el-radio>
+                                            <el-radio v-model="ep.check_3" label="GTEx">GTEx</el-radio>
+                                        </li>
+                                        <li style="width: 100px; border: none;">
+                                            <el-button type="primary" @click="getEITData()">check</el-button>
+                                        </li>
+                                    </ul>
+                                    <div class="g_con_li_2_li1" id="g_con_li_2_li1"></div>
+                                </div>
+                                <div class="g_con_li_2">
+                                    <h5>Expression in Celllines</h5>
+                                    <ul class="g_con_li_2_sel clearfix">
+                                        <li>
+                                            <span class="g_con_li_2_sel_name">Check the pattern to display</span>
+                                            <el-radio v-model="ep.check2_2" label="1">Anatomic System</el-radio>
+                                            <el-radio v-model="ep.check2_2" label="2">Value</el-radio>
+                                        </li>
+                                        <li style="width: 100px; border: none;">
+                                            <el-button type="primary" @click="getEPCData()">check</el-button>
+                                        </li>
+                                    </ul>
+                                    <div class="g_con_li_2_li2" id="g_con_li_2_li2"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_3">Intracellular localization</h4>
+                                <div class="g_con_li_3 clearfix">
+                                    <div class="g_con_li_3_sel">
+                                        <span class="g_con_li_2_sel_name">Check to change the picture</span>
+                                        <el-checkbox-group v-model="il.selList">
+                                            <el-checkbox style="color: blue;" label="1">Blue: Nuclear</el-checkbox>
+                                            <el-checkbox style="color: red;" label="2">Red: Microtubule</el-checkbox>
+                                            <el-checkbox style="color: #00FFA7;" label="3">Green: Antibody</el-checkbox>
+                                            <el-checkbox style="color: #FFC4AD;" label="4">Yellow: Endoplasmic Reticulum</el-checkbox>
+                                        </el-checkbox-group>
+                                        <el-button type="primary" @click="getilImg()" style="display: block; margin: 10px auto;">check</el-button>
+                                    </div>
+                                    <div class="g_con_li_3_img" v-loading="il.imgUrl">
+                                        <img src="" alt="" id="genes_cell_img"/>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_4">Correlation</h4>
+                                <div class="d_con_li_3">
+                                    <el-collapse v-model="activeNames" @change="handleChange">
+                                        <el-collapse-item title="Filter" name="sel">
+                                            <div class="cl_sel clearfix">
+                                                <ul style="padding-left: 20px;">
+                                                    <li>
+                                                        <div style="margin: 10px 0;"><el-tag type="warning">tumor</el-tag></div>
+                                                        <el-checkbox :indeterminate="cl.filter.isIndeterminate" v-model="cl.filter.checkAll" @change="handleCheckAllChange_cl">Check All</el-checkbox>
+                                                            <div style="margin: 15px 0;"></div>
+                                                            <el-checkbox-group v-model="cl.searchBar.sel_idlist" @change="handleCheckedCitiesChange_cl">
+                                                            <el-checkbox v-for="x in cl.filter.tumorlist" :label="x" :key="x.tumor_id">{{x.full_name}}</el-checkbox>
+                                                        </el-checkbox-group>
+                                                    </li>
+                                                    <li>
+                                                        <div style="margin: 10px 0;"><el-tag type="warning">correlation_coefficient_absolute_value</el-tag></div>
+                                                        <template>
+                                                            <el-radio v-model="cl.searchBar.cof" label="0.5">>0.5</el-radio>
+                                                            <el-radio v-model="cl.searchBar.cof" label="0.7">>0.7</el-radio>
+                                                            <el-radio v-model="cl.searchBar.cof" label="0.9">>0.9</el-radio>
+                                                        </template>
+                                                    </li>
+                                                    <li>
+                                                        <div style="margin: 10px 0;"><el-tag type="warning">p_value</el-tag></div>
+                                                        <template>
+                                                            <el-radio v-model="cl.searchBar.pv" label="0.01"><0.01</el-radio>
+                                                            <el-radio v-model="cl.searchBar.pv" label="0.05"><0.05</el-radio>
+                                                            <el-radio v-model="cl.searchBar.pv" label="0.1"><0.1</el-radio>
+                                                        </template>
+                                                    </li>
+                                                </ul>
+                                                <el-button type="primary" style="margin: 10px;" @click="submit_cl_searchBar">submit</el-button>
+                                            </div>
+                                        </el-collapse-item>
+                                        <el-collapse-item title="microRNA ~ gene" name="mRna">
+                                            <div v-loading="cl.mRna.mapDataJud">
+                                                <color-map :data="cl.mRna.mapData" type="2"></color-map>
+                                                <div class="d_gene_map_table">
+                                                    <div style="width: 100%; text-align: center;">Most correlated between miRNA ~ gene</div>
+                                                    <el-table
+                                                        :data="cl.mRna.data"
+                                                        border
+                                                        @sort-change="changeTabe($event, 'mr')"
+                                                        style="width: 100%;">
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="symbol"
+                                                            label="miRNA">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="correlation_coefficent"
+                                                            :formatter="formatNum"
+                                                            label="Correlation coefficent">
+                                                            <template slot-scope="scope">
+                                                                <span>{{scope.row.correlation_coefficent | n(3)}}</span>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="p_value"
+                                                            :formatter="formatNum"
+                                                            label="p value">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="tumor_name"
+                                                            label="tumor">
+                                                        </el-table-column>
+                                                    </el-table>
+                                                    <el-pagination
+                                                        @current-change="handleCurrentChange($event, 'mr')"
+                                                        :current-page="cl.mRna.page"
+                                                        layout="total, prev, pager, next"
+                                                        :total="cl.mRna.totalNum">
+                                                    </el-pagination>
+                                                </div>
+                                            </div>
+                                        </el-collapse-item>
+                                        <el-collapse-item title="transcription factor ~ gene" name="tfRna">
+                                            <div  v-loading="cl.tfRna.mapDataJud">
+                                                <color-map :data="cl.tfRna.mapData" type="1"></color-map>
+                                                <div class="d_gene_map_table">
+                                                    <div style="width: 100%; text-align: center;">Most correlated between TF ~ gene</div>
+                                                    <el-table
+                                                        :data="cl.tfRna.data"
+                                                        border
+                                                        @sort-change="changeTabe($event, 'tfg')"
+                                                        style="width: 100%;">
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="symbol"
+                                                            label="TF">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="correlation_coefficent"
+                                                            :formatter="formatNum"
+                                                            label="Correlation coefficent">
+                                                            <template slot-scope="scope">
+                                                                <span>{{scope.row.correlation_coefficent | n(3)}}</span>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="p_value"
+                                                            :formatter="formatNum"
+                                                            label="p value">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="tumor_name"
+                                                            label="tumor">
+                                                        </el-table-column>
+                                                    </el-table>
+                                                    <el-pagination
+                                                        @current-change="handleCurrentChange($event, 'tfg')"
+                                                        :current-page="cl.tfRna.page"
+                                                        layout="total, prev, pager, next"
+                                                        :total="cl.tfRna.totalNum">
+                                                    </el-pagination>
+                                                </div>
+                                            </div>
+                                        </el-collapse-item>
+                                        <el-collapse-item title="lncRNA ~ gene" name="lRna">
+                                            <div v-loading="cl.lRna.mapDataJud">
+                                                <color-map :data="cl.lRna.mapData" type="0"></color-map>
+                                                <div class="d_gene_map_table">
+                                                    <div style="width: 100%; text-align: center;">Most correlated between lncRNA ~ gene</div>
+                                                    <el-table
+                                                        :data="cl.lRna.data"
+                                                        border
+                                                        @sort-change="changeTabe($event, 'lr')"
+                                                        style="width: 100%;">
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="symbol"
+                                                            label="LncRNA">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="correlation_coefficent"
+                                                            :formatter="formatNum"
+                                                            label="Correlation coefficent">
+                                                            <template slot-scope="scope">
+                                                                <span>{{scope.row.correlation_coefficent | n(3)}}</span>
+                                                            </template>
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="p_value"
+                                                            :formatter="formatNum"
+                                                            label="p value">
+                                                        </el-table-column>
+                                                        <el-table-column
+                                                            sortable="custom"
+                                                            prop="tumor_name"
+                                                            label="tumor">
+                                                        </el-table-column>
+                                                    </el-table>
+                                                    <el-pagination
+                                                        @current-change="handleCurrentChange($event, 'lr')"
+                                                        :current-page="cl.lRna.page"
+                                                        layout="total, prev, pager, next"
+                                                        :total="cl.lRna.totalNum">
+                                                    </el-pagination>
+                                                </div>
+                                            </div>
+                                        </el-collapse-item>
+                                    </el-collapse>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_5">Posttranslational Modification</h4>
+                                <div class="g_con_li_5">
+                                    <el-table
+                                        :data="ptm.data"
+                                        border
+                                        @sort-change="changeTabe($event, 'ptm')"
+                                        style="width: 100%;">
+                                        <el-table-column
+                                            prop="ptm"
+                                            label="ptm">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="ptm_site"
+                                            label="ptm_site">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="cell_line"
+                                            label="cell_line">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="publication"
+                                            label="publication">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="species"
+                                            label="species">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="kinase"
+                                            label="kinase">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="pmid"
+                                            label="PMID">
+                                            <template slot-scope="scope">
+					                            <a :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + scope.row.pmid" class="operate_text">{{scope.row.pmid}}</a>
+					                        </template>
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-pagination
+                                        @current-change="handleCurrentChange($event, 'ptm')"
+                                        :current-page="ptm.page"
+                                        layout="total, prev, pager, next"
+                                        :total="ptm.totalNum">
+                                    </el-pagination>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_6">ncRNA Regulation</h4>
+                                <div class="g_con_li_5">
+                                    <div style="font-size: 16px; line-height: 40px; font-weight: bold;">miRNA</div>
+                                    <el-table
+                                        :data="nr.data1"
+                                        border
+                                        @sort-change="changeTabe($event, 'nr1')"
+                                        style="width: 100%;">
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="mirna_name"
+                                            label="miRNA">
+                                        </el-table-column>
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="cell_lines"
+                                            label="Cell Lines">
+                                        </el-table-column>
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="pmid"
+                                            label="PMID">
+                                            <template slot-scope="scope">
+                                                <a :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + scope.row.pmid" class="operate_text">{{scope.row.pmid}}</a>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-pagination
+                                        @current-change="handleCurrentChange($event, 'nr1')"
+                                        :current-page="nr.page1"
+                                        layout="total, prev, pager, next"
+                                        :total="nr.totalNum1">
+                                    </el-pagination>
+                                    <div style="font-size: 16px; line-height: 40px; font-weight: bold; margin-top: 20px;">lncRNA</div>
+                                    <el-table
+                                        :data="nr.data2"
+                                        border
+                                        @sort-change="changeTabe($event, 'nr2')"
+                                        style="width: 100%;">
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="lncrna_name"
+                                            label="lncRNA">
+                                        </el-table-column>
+
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="lncrna_name"
+                                            label="lncRNA name">
+                                        </el-table-column>
+
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="cell_lines"
+                                            label="cell lines">
+                                        </el-table-column>
+
+
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="interaction_parterner"
+                                            label="interaction parterner">
+                                        </el-table-column>
+
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="interaction_level"
+                                            label="interaction level">
+                                        </el-table-column>
+
+                                        <el-table-column
+                                            sortable="custom"
+                                            prop="pmid"
+                                            label="PMID">
+                                            <template slot-scope="scope">
+					                            <a :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + scope.row.pmid" class="operate_text">{{scope.row.pmid}}</a>
+					                        </template>
+                                        </el-table-column>
+
+                                    </el-table>
+                                    <el-pagination
+                                        @current-change="handleCurrentChange($event, 'nr2')"
+                                        :current-page="nr.page2"
+                                        layout="total, prev, pager, next"
+                                        :total="nr.totalNum2">
+                                    </el-pagination>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_7">Methylation</h4>
+                                <div class="g_con_li_7">
+                                    <el-table
+                                        :data="ML.data"
+                                        border
+                                        @sort-change="changeTabe($event, 'ML')"
+                                        style="width: 100%;">
+                                        <el-table-column
+                                            prop="author_year"
+                                            label="author, year">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="results"
+                                            label="results">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="biological_sample"
+                                            label="biological sample">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="method"
+                                            label="method">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="disease"
+                                            label="disease">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="pmid"
+                                            label="PMID">
+                                            <template slot-scope="scope">
+					                            <a :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + scope.row.pmid" class="operate_text">{{scope.row.pmid}}</a>
+					                        </template>
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-pagination
+                                        @current-change="handleCurrentChange($event, 'ML')"
+                                        :current-page="ML.page"
+                                        layout="total, prev, pager, next"
+                                        :total="ML.totalNum">
+                                    </el-pagination>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_8">Alternative splicing</h4>
+                                <h5></h5>
+                                <div class="g_con_li_8">
+                                    <div class="group_line" style="margin-top: 10px;">
+                                        <el-button style="float: right;" type="primary" @click="getASScreen">submit</el-button>
+                                        <el-select style="float: right;" v-model="AS.selTumor" placeholder="Tumor filter">
+                                            <el-option
+                                                v-for="x in cl.filter.tumorlist"
+                                                :key="x.tumor_id"
+                                                :label="x.tumor"
+                                                :value="x.tumor_id">
+                                            </el-option>
+                                        </el-select>
+                                    </div>
+                                    <div v-show="AS.data.length > 0" class="group_line" style="overflow-x: scroll;padding-bottom: 100px; width: 100%">
+                                        <bar-map :data="AS.data" type="4" ref="genes_bar"></bar-map>
+                                    </div>
+                                    <div v-show="AS.data.length == 0" class="group_line" style="overflow-x: scroll;padding-bottom: 100px; width: 100%">
+                                        <p style="line-height: 100px; text-align: center; color: #999;">select Tumor</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <h4 class="scrolltit_9">Animal model</h4>
+                                <div class="g_con_li_9">
+                                    <el-table
+                                        :data="AM.data"
+                                        border
+                                        @sort-change="changeTabe($event, 'AM')"
+                                        style="width: 100%;">
+                                        <el-table-column
+                                            prop="author_year"
+                                            label="author, year">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="phenotype"
+                                            label="phenotype">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="biological_sample"
+                                            label="biological sample">
+                                        </el-table-column>
+                                        <el-table-column
+                                            prop="pmid"
+                                            label="PMID">
+                                            <template slot-scope="scope">
+					                            <a :href="'https://www.ncbi.nlm.nih.gov/pubmed/?term=' + scope.row.pmid" class="operate_text">{{scope.row.pmid}}</a>
+					                        </template>
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-pagination
+                                        @current-change="handleCurrentChange($event, 'AM')"
+                                        :current-page="AM.page"
+                                        layout="total, prev, pager, next"
+                                        :total="AM.totalNum">
+                                    </el-pagination>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <!-- Downloads -->
+        <script type="text/x-template" id="router_downloads">
+            <div class="router_downloads">
+                <div class="d_con_ul"><h4>Downloads</h4></div>
+                <el-table
+                        border
+                        :data="list">
+                    <el-table-column
+                            prop="name"
+                            label="name">
+                    </el-table-column>
+                    <el-table-column
+                            prop="link"
+                            label="download">
+                        <template slot-scope="scope">
+                            <a :href="scope.row.link" class="operate_text">download</a>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+        </script>
+
+        <!-- About
+        <script type="text/x-template" id="router_about_us">
+            <div class="router_about_us">
+                <div class="d_con_ul"><h4>About us</h4></div>
+                <div class="content_p">
+                    <p style="text-indent: 2em; margin-bottom: 10px;width : 500px;" v-for="p in list">{{p.content}}</p>
+                </div>
+            </div>
+        </script>
+         -->
+
+        <!-- Contact   -->
+        <script type="text/x-template" id="router_contact">
+            <div class="router_contact">
+                <div class="d_con_ul"><h4>Contact</h4></div>
+                <div class="content_p">
+                    <p>&nbsp;&nbsp;Prompt by the lack of abundantly comprehensive online resources concerning
+                      autophay, especially the relationship between autophagy and tumors, we developed
+                      Autophagy and Tumor Database (ATdb; <a href="http://www.bigzju.com/ATdb/" style="text-decoration:underline">http://www.bigzju.com/ATdb/</a>), a comprehensive database dedicated to autophagy research.</p>
+                    <br>
+
+                    <p style="text-indent: 2em; margin-bottom: 10px" >georgewu@zju.edu.cn</p>
+                    <p style="text-indent: 2em; margin-bottom: 10px" >clearchen@zju.edu.cn</p>
+                </div>
+            </div>
+        </script>
+
+
+
+        <!-- Tutorail -->
+        <script type="text/x-template" id="router_tutorail">
+            <div class="router_tutorail">
+                <div class="d_con_ul"><h4>Tutorial</h4></div>
+                <div>
+                    <div style="width: 800px; margin: 0 auto 20px">
+                        <!--<video style="width: 1000px; height: 570px" src="http://101.132.33.104/T.mp4" controls></video>-->
+                    </div>
+                    <p style="margin-bottom: 20px">Download: <a class="operate_text" href = "./appendices/Tutorial.pdf"  target="_blank">Tutorial.pdf</a></p>
+                </div>
+                <hr>
+                <!--now starte the online contents of torurial-->
+                <div>
+                  <div>
+                  <p><h1 style="font-family:Cambria; color:#4F81BD;font-size:28px;">Contents<h1></p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;"><a href="#int" style="text-decoration:underline">1 Introduction</a></p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;"><a href="#SN" style="text-decoration:underline">2 Search/Navigate</a></p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;"><a href="#GP" style="text-decoration:underline">3 Gene-specific page</a></p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;"><a href="#TP" style="text-decoration:underline">4 Tumor-specific page</a></p>
+                  </div>
+                    <hr>
+                  <div>
+                  <p><h1 id="int"style="font-family:Cambria; color:#4F81BD;font-size:28px;">1 Introduction<h1></p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;The structure of ACdb website is shown in Figure 1.</p>
+                  <img  src="./appendices/tutorial_img/F.png" style="border:1px solid #4F81BD" width="600px">
+                </div>
+                    <hr>
+                  <div>
+                  <p><h1 id="SN"  style="font-family:Cambria; color:#4F81BD;font-size:28px;">2 Search/Navigate<h1></p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;Search fileds were provided in three pages.</p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;They are homepage<img src="./appendices/tutorial_img/Fa.png" style="border:1px solid black" height="60px" align="absmiddle">
+                  , Genes page<img src="./appendices/tutorial_img/gp.png" style="border:1px solid black" height="60px" align="absmiddle">
+                  and Tumors page<img src="./appendices/tutorial_img/tp.png" style="border:1px solid black" height="60px" align="absmiddle">.</p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;">In the homepage<img src="./appendices/tutorial_img/Fa.png" style="border:1px solid black" height="60px" align="absmiddle">,
+                   when typing in your interested entity, the website autocomplete your search terms (Figure 2). Both the gene names and the tumor names will be matched.
+                    Select the interested entity, clink on the <em style=" font-style:italic">Autophagy it!</em><img src="./appendices/tutorial_img/ai.png" style="border:1px solid black" height="60px" align="absmiddle">button, the website goes forward.</p>
+                  <img src="./appendices/tutorial_img/f2.png" style="border:1px solid #4F81BD" width="600px">
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;In the Genes page&nbsp;<img src="./appendices/tutorial_img/gp.png" style="border:1px solid black" height="60px" align="absmiddle">,
+                    <i style="font-style:italic">Illustration</i>, <i style="font-style:italic">Search</i> and <i style="font-style:italic">Dropdown list</i> offer three entrances to a gene-specific page.
+                    <i style="font-style:italic">Illustration</i> allows a visual selection for interested genes. By clicking on the ovals, the website will navigate to the targeted page (see “<a href="#GP" style="text-decoration:underline">3 Gene-specific page</a>”).
+                    <i style="font-style:italic">Search</i> works the same as shown in the Figure 1.
+                    <i style="font-style:italic">Dropdown list</i> listed all the included genes.
+                  </p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;In the Tumors page<img src="./appendices/tutorial_img/tp.png" style="border:1px solid black" height="60px" align="absmiddle">,
+                    <i style="font-style:italic">Illustration</i>, <i style="font-style:italic">Search</i> and <i style="font-style:italic">Dropdown list</i> offer three entrances to a tumor-specific page (see “<a href="#TP" style="text-decoration:underline">4 Tumor-specific page</a>”). They works similarly in the Genes page.
+                  </p>
+                  <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;# Caution: Only several tumors or genes are displayed in the illustration. For more information, please browse by <i style="font-style:italic">Search</i> OR <i style="font-style:italic">Dropdown list</i>.
+                  </p>
+                  </div>
+                    <hr>
+                  <div>
+                    <p><h1 id="GP" style="font-family:Cambria; color:#4F81BD;font-size:28px;">3 Gene-specific page<h1></p>
+                    <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;In a gene-specific page, the following information was displayed:
+                      General Information, Expression Profile, Intracellular Localization, Correlation, PTM, ncRNA Regulation, Methylation, Alternative splicing, Animal model.
+                       Let’s take <a style="font-style:bold;font-size:30px;" >BCL2</a> as the interested gene.
+                    </p>
+                    <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;<a style="color: #44B8A5;	font-size: 28px;">Correlation</a> shows the correlation coefficients between the expression of BCL2 and the expression of microRNAs,
+                      transcription factors and lncRNAs. To get more precise results, one can select tumors,
+                      range of correlation coefficients and ranges of <i style="font-style:italic">p</i> values in the Filter (Figure 3).
+                      The colors of the cells indicates the values of correlation coefficients. Hovering the mouse on the cells, the name of the miRNA appears (Figure 4).
+                      On clicking the cells, a scatter plot will be drawn (Figure 5).
+                    </p>
+                    <img src="./appendices/tutorial_img/f3.png"  style="border:1px solid #4F81BD" width="600px"><br>
+                    <img src="./appendices/tutorial_img/f4.png"  style="border:1px solid #4F81BD" width="600px"><br>
+                    <img src="./appendices/tutorial_img/f5.png"  style="border:1px solid #4F81BD" width="600px">
+                    <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;In <a style="color: #44B8A5;	font-size: 28px;">Alternative splicing</a>, select a tumor on the right, <img src="./appendices/tutorial_img/tf.png" style="border:1px solid black" height="60px" align="absmiddle">
+                      click “submit”. A boxplot follows (Figure 6).</p>
+                    <img src="./appendices/tutorial_img/f6.png"  style="border:1px solid #4F81BD" width="600px">
+                  </div>
+                    <hr>
+                  <div>
+                    <p><h1 id="TP" style="font-family:Cambria; color:#4F81BD;font-size:28px;">4 Tumor-specific page<h1></p>
+                    <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;In a tumor-specific page, the following information was displayed: Brief Summary,
+                      Gene Expression (Normal/Tumor, Stage, Survival), Correlation, KM-plot. Let’s take <a style="font-style:bold;font-size:30px;" >Breast Cancer</a> as the interested cancer.</p>
+                    <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;<a style="color: #44B8A5;	font-size: 28px;">Correlation</a> works similarly as that in “<a href="#GP" style="text-decoration:underline">3 Gene-specific page</a>”.</p>
+                    <p style="font-family:Calibri;color:#000000;font-size:20px;">&nbsp;&nbsp;In <a style="color: #44B8A5;	font-size: 28px;">KM-plot</a>, this website provides customized survival analysis with sub-population selection,
+                      data source selection and cut-off points selection. Datasets available include TCGA (Figure 7) and series from GEO</p>
+                    <img src="./appendices/tutorial_img/f7.png"  style="border:1px solid #4F81BD" width="600px">
+
+                  </div>
+                </div>
+            </div>
+        </script>
+    </body>
+    <script type="text/javascript" src="libs/vue/vue.js"></script>
+    <script type="text/javascript" src="libs/vue/vue-router.js"></script>
+    <script type="text/javascript" src="libs/element/elememt.js"></script>
+    <script type="text/javascript" src="libs/libsJs/jq.js"></script>
+    <script type="text/javascript" src="libs/libsJs/echarts.min.js"></script>
+    <script type="text/javascript" src="libs/libsJs/ecStat.min.js"></script>
+    <script type="text/javascript" src="libs/libsJs/d3.v3.js"></script>
+    <script type="text/javascript" src="libs/libsJs/km.js"></script>
+    <script type="text/javascript" src="libs/nprogress/nprogress.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/component.js"></script>
+    <script type="text/javascript" src="js/controller/homepage.js"></script>
+    <script type="text/javascript" src="js/controller/genes.js"></script>
+    <script type="text/javascript" src="js/controller/tumors.js"></script>
+    <script type="text/javascript" src="js/controller/tumour_details.js"></script>
+    <script type="text/javascript" src="js/controller/genes_details.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="js/controller/others.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+</html>
