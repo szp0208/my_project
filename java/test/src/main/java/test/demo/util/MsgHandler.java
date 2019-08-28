@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 通用消息传输模型
  */
-public class MsgHandler implements Serializable{
+public class MsgHandler extends Throwable implements Serializable{
 
     /**
      * 处理状态
@@ -21,6 +21,7 @@ public class MsgHandler implements Serializable{
      * 内容句柄
      */
     private Object context;
+    private String code;
 
     public String getStatus() {
         return status;
@@ -44,6 +45,14 @@ public class MsgHandler implements Serializable{
 
     public void setContext(Object context) {
         this.context = context;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
 }

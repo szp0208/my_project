@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -46,28 +47,34 @@ public class OriginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;  //浏览器url地址参数对象
 
         System.out.println("浏览器域名：" + req.getHeader("Origin"));
-        System.out.println("浏览器域名：" + req.getRequestURI());
-        String[] allowDomains = {"http://192.168.2.114:8000", "http://localhost:8000"};    //跨域请求白名单
+        System.out.println("浏览器接口地址：" + req.getRequestURI());
+        String[] allowDomains = {"http://192.168.2.114:8000", "http://localhost:8000", "http://localhost:8083"};    //跨域请求白名单
         HashSet allowOrigins = new HashSet(Arrays.asList(allowDomains));
         if (allowOrigins.contains(req.getHeader("Origin"))) {    //判断字符串是否存在,contains
             System.out.println("允许该域名跨域请求");
             rep.setHeader("Access-Control-Allow-Origin", req.getHeader("Origin"));
             rep.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE,PUT");
+            rep.setHeader("Access-Control-Allow-Credentials", "true");
+            rep.setHeader("Connection", "keep-alive");
+            rep.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS");
             rep.setHeader("Access-Control-Max-Age", "3600");
-            rep.setHeader("Access-Control-Allow-Headers","token, Origin, X-Requested-With, Content-Type, Accept");
+            rep.setHeader("Access-Control-Allow-Headers","login-token, token, Origin, X-Requested-With, Content-Type, Accept");
+            rep.setContentType("application/json; charset=utf-8");
 
             String token = req.getHeader("token");//header方式获取token
-            System.out.println(token);
-
-            MsgHandler handler = new MsgHandler();
+            System.out.println("token：" + token);
             boolean isFilter = false;
 
             String method = ((HttpServletRequest) request).getMethod();
             if(method.equals("OPTIONS") || req.getRequestURI().equals("/user/userLogin")) {
                 rep.setStatus(HttpServletResponse.SC_OK);
             } else {
-                if(null == token || token.isEmpty()) {
-                    throw new RuntimeException("用户授权认证没有通过!客户端请求参数中无token信息");
+                if(null == token || token.isEmpty()) {  //请求头中无token信息
+                    MsgHandler handler = new MsgHandler();
+                    handler.setMessage("用户授权认证没有通过!客户端请求参数中无token信息");
+                    handler.setStatus("100002");
+                    JSONObject responObj = JSONObject.fromObject(handler); //将实体对象转换为JSON Object转换
+                    response.getWriter().print(responObj);
                 } else {
                     try {
                         // 获取 token 中的 user id
@@ -78,10 +85,18 @@ public class OriginFilter implements Filter {
                         if (verify) {
                             isFilter = true;
                         } else {
-                            throw new RuntimeException("用户授权认证没有通过!客户端请求参数token信息无效");
+                            MsgHandler handler = new MsgHandler();
+                            handler.setMessage("用户授权认证没有通过!客户端请求参数token信息无效");
+                            handler.setStatus("100003");
+                            JSONObject responObj = JSONObject.fromObject(handler); //将实体对象转换为JSON Object转换
+                            response.getWriter().print(responObj);
                         }
-                    } catch (Exception e) {
-                        throw new RuntimeException("用户授权认证没有通过!客户端请求参数token信息无效");
+                    } catch (Exception e) { //如果获取用户信息失败token过期
+                        MsgHandler handler = new MsgHandler();
+                        handler.setMessage("用户授权认证没有通过!客户端请求参数token信息无效");
+                        handler.setStatus("100003");
+                        JSONObject responObj = JSONObject.fromObject(handler); //将实体对象转换为JSON Object转换
+                        response.getWriter().print(responObj);
                     }
                 }
             }
