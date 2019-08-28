@@ -22,7 +22,7 @@ import test.demo.bean.User;
 import test.demo.service.UserService;
 
 /**
- * 处理跨域问题-过滤器+token验证拦截
+ * 处理跨域问题-过滤器+login_token验证拦截
  * @author MR.SHI
  * @date 2019/06/06
  *
@@ -48,7 +48,7 @@ public class OriginFilter implements Filter {
 
         System.out.println("浏览器域名：" + req.getHeader("Origin"));
         System.out.println("浏览器接口地址：" + req.getRequestURI());
-        String[] allowDomains = {"http://192.168.2.114:8000", "http://localhost:8000", "http://localhost:8083"};    //跨域请求白名单
+        String[] allowDomains = {"http://localhost:8083", "http://localhost:8085"};    //跨域请求白名单
         HashSet allowOrigins = new HashSet(Arrays.asList(allowDomains));
         if (allowOrigins.contains(req.getHeader("Origin"))) {    //判断字符串是否存在,contains
             System.out.println("允许该域名跨域请求");
@@ -58,51 +58,51 @@ public class OriginFilter implements Filter {
             rep.setHeader("Connection", "keep-alive");
             rep.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS");
             rep.setHeader("Access-Control-Max-Age", "3600");
-            rep.setHeader("Access-Control-Allow-Headers","login-token, token, Origin, X-Requested-With, Content-Type, Accept");
+            rep.setHeader("Access-Control-Allow-Headers","login_token, Origin, X-Requested-With, Content-Type, Accept");
             rep.setContentType("application/json; charset=utf-8");
 
-            String token = req.getHeader("token");//header方式获取token
-            System.out.println("token：" + token);
+            String login_token = req.getHeader("login_token");//header方式获取login_token
+            System.out.println("login_token：" + login_token);
             boolean isFilter = false;
 
             String method = ((HttpServletRequest) request).getMethod();
-            if(method.equals("OPTIONS") || req.getRequestURI().equals("/user/userLogin")) {
+            if(method.equals("OPTIONS") || req.getRequestURI().equals("/api/login")) {
                 rep.setStatus(HttpServletResponse.SC_OK);
             } else {
-                if(null == token || token.isEmpty()) {  //请求头中无token信息
+                if(null == login_token || login_token.isEmpty()) {  //请求头中无login_token信息
                     MsgHandler handler = new MsgHandler();
-                    handler.setMessage("用户授权认证没有通过!客户端请求参数中无token信息");
-                    handler.setStatus("100002");
+                    handler.setMessage("用户授权认证没有通过!客户端请求参数中无login_token信息");
+                    handler.setCode("100002");
                     JSONObject responObj = JSONObject.fromObject(handler); //将实体对象转换为JSON Object转换
                     response.getWriter().print(responObj);
                 } else {
                     try {
-                        // 获取 token 中的 user id
-                        String userId = TokenUtil.parseJWT(token).get("id").toString();
+                        // 获取 login_token 中的 user id
+                        String userId = TokenUtil.parseJWT(login_token).get("id").toString();
                         System.out.println("用户id：" + userId);
                         User user = userService.findUserById(Integer.valueOf(userId));
-                        Boolean verify = TokenUtil.isVerify(token, user);
+                        Boolean verify = TokenUtil.isVerify(login_token, user);
                         if (verify) {
                             isFilter = true;
                         } else {
                             MsgHandler handler = new MsgHandler();
-                            handler.setMessage("用户授权认证没有通过!客户端请求参数token信息无效");
-                            handler.setStatus("100003");
+                            handler.setMessage("用户授权认证没有通过!客户端请求参数login_token信息无效");
+                            handler.setCode("100003");
                             JSONObject responObj = JSONObject.fromObject(handler); //将实体对象转换为JSON Object转换
                             response.getWriter().print(responObj);
                         }
-                    } catch (Exception e) { //如果获取用户信息失败token过期
+                    } catch (Exception e) { //如果获取用户信息失败login_token过期
                         MsgHandler handler = new MsgHandler();
-                        handler.setMessage("用户授权认证没有通过!客户端请求参数token信息无效");
-                        handler.setStatus("100003");
+                        handler.setMessage("用户授权认证没有通过!客户端请求参数login_token信息无效");
+                        handler.setCode("100003");
                         JSONObject responObj = JSONObject.fromObject(handler); //将实体对象转换为JSON Object转换
                         response.getWriter().print(responObj);
                     }
                 }
             }
 
-            if (isFilter || req.getRequestURI().equals("/user/userLogin")) {
-                logger.info("token filter过滤ok!");
+            if (isFilter || req.getRequestURI().equals("/api/login")) {
+                logger.info("login_token filter过滤ok!");
                 chain.doFilter(request, response);
             }
         } else {

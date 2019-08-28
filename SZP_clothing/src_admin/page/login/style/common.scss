@@ -1,0 +1,92 @@
+/**
+ * Created by 李华良 on 2018/10/17
+ */
+
+@import "../../../../public/base.scss";
+
+h1 {
+  line-height: 100px;
+  color: #595959;
+  margin: 0;
+}
+
+.flexLine {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+
+  > *:not(:first-child) {
+    margin-left: 3px;
+    flex-shrink: 0;
+  }
+}
+
+a:focus {
+  text-decoration: none;
+}
+
+  .errMsg {
+    color: red;
+    @extend %ellipsis;
+
+    i {
+      margin-right: 2px;
+    }
+  }
+
+.submitBtn {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 42px;
+  color: #FFFFFF;
+  text-align: center;
+  border: 1px solid #04A9F5;
+  box-shadow: 0 7px 16px 0 rgba(4,169,245,0.40);
+  border-radius: 100px;
+  width: 80%;
+  height: auto;
+  padding: 0;
+  outline: none;
+  background: #04A9F5;
+
+  &[disabled] {
+    background: #92D2F6;
+    border-color: #92D2F6;
+    cursor: not-allowed;
+  }
+}
+
+.smsCodeBtn {
+  $enabled-color: #E3F4FD;
+  $disabled-color: #B7B7B7;
+
+  background: $enabled-color;
+  border: 1px solid $enabled-color;
+  border-radius: 100px;
+  font-size: 12px;
+  line-height: 1;
+  color: #04A9F5;
+  letter-spacing: 0;
+  text-align: center;
+  padding: 6px 12px;
+  outline: none;
+  position: absolute;
+  width: 90px;
+  height: auto;
+  right: 0;
+  bottom: 6px;
+
+  &[disabled] {
+    cursor: not-allowed;
+    color: $disabled-color;
+    border-color: $disabled-color;
+    background-color: transparent;
+  }
+}
+
+.formItem {
+  position: relative;
+  margin-bottom: 27px;
+}

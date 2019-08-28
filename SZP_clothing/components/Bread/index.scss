@@ -1,0 +1,26 @@
+@import '../../public/base.scss';
+
+.overHidden{
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.iconStyle {
+  float: left;
+  background-color: $color-blue;
+  margin-top: 2px;
+  width: 3px;
+  height: 18px;
+}
+
+.breadcrumb{
+  float: left;
+  padding-left: 15px;
+  font-size: 12px;
+  color: #A1A6AD;
+
+  &>span:last-child{
+    font-size: 14px;
+    color: #000;
+  }
+}

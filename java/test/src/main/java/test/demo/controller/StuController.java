@@ -17,8 +17,8 @@ public class StuController {
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     public MsgHandler userList() throws Exception {
         MsgHandler handler = new MsgHandler();
-        handler.setContext(stuService.getList());
-        handler.setStatus("200");
+        handler.setResult(stuService.getList());
+        handler.setCode("200");
         return handler;
     }
 
@@ -28,11 +28,11 @@ public class StuController {
         //判断是否为空-未传
         if (StringUtils.isNull(stu.getId())){
             handler.setMessage("id is not found");
-            handler.setStatus("400");
+            handler.setCode("400");
             return handler;
         }
-        handler.setContext(stuService.getListByid(stu.getId()));
-        handler.setStatus("200");
+        handler.setResult(stuService.getListByid(stu.getId()));
+        handler.setCode("200");
         return handler;
     }
 
@@ -42,13 +42,13 @@ public class StuController {
         //判断是否为空-未传
         if (StringUtils.isNull(stu.getName()) || StringUtils.isNull(stu.getAge()) || StringUtils.isNull(stu.getSex())){
             handler.setMessage("参数填写错误");
-            handler.setStatus("400");
+            handler.setCode("400");
             return handler;
         }
         Stu res = stuService.addUser(stu);
-        handler.setContext(res);
+        handler.setResult(res);
         handler.setMessage("添加成功ID：" + res.getId());
-        handler.setStatus("200");
+        handler.setCode("200");
         return handler;
     }
 
@@ -58,12 +58,12 @@ public class StuController {
         //判断是否为空-未传
         if (StringUtils.isNull(stu.getId())){
             handler.setMessage("id is not found");
-            handler.setStatus("400");
+            handler.setCode("400");
             return handler;
         }
         stuService.delectByid(stu.getId());
-        handler.setContext("删除成功");
-        handler.setStatus("200");
+        handler.setResult("删除成功");
+        handler.setCode("200");
         return handler;
     }
 
@@ -73,13 +73,13 @@ public class StuController {
         //判断是否为空-未传
         if (StringUtils.isNull(stu.getId()) || StringUtils.isNull(stu.getName()) || StringUtils.isNull(stu.getAge()) || StringUtils.isNull(stu.getSex())){
             handler.setMessage("参数填写错误");
-            handler.setStatus("400");
+            handler.setCode("400");
             return handler;
         }
         Stu res = stuService.updateByid(stu);
-        handler.setContext(res);
+        handler.setResult(res);
         handler.setMessage("更新成功ID:" + res.getId());
-        handler.setStatus("200");
+        handler.setCode("200");
         return handler;
     }
 

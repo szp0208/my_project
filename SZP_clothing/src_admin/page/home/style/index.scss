@@ -1,0 +1,76 @@
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.toolBarContent {
+  background-color: #ffffff;
+  height: 550px;
+  margin-top: 25px;
+  .toolBar{
+    height: 50px;
+    border-bottom: 1px solid #e4e8f7;
+    span {
+      display: inline-block;
+      height: 50px;
+      line-height: 50px;
+    }
+    .toolBarTabSelected {
+      text-align: center;
+      width: 90px;
+      border-bottom: 1px solid #ffffff;
+      border-top: 5px solid #00a2ff;
+      cursor: pointer;
+    }
+    .toolBarTab {
+      text-align: center;
+      width: 90px;
+      height: 45px;
+      cursor: pointer;
+    }
+    .dateItem {
+      width: 50px;
+      cursor: pointer;
+    }
+    .blueColor {
+      color: #1890ff;
+      font-weight: bold;
+    }
+  }
+}
+.imgStyle {
+  width: calc(100% - 350px);
+  max-height: 400px;
+}
+.dataModule {
+  width: 350px;
+  float: right;
+  .listItem {
+    height: 50px;
+    width:100%;
+    .circle {
+      text-align: center;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 20px;
+      background-color: #dddddd;
+      color: #ffffff;
+      margin: 15px;
+    }
+    .circleYellow {
+      background-color: #ffd545;
+    }
+    .dataItemNum {
+      float: right;
+      height: 50px;
+      line-height: 50px;
+      margin-right: 20px;
+    }
+  }
+  .dataTitle {
+    font-size: 18px;
+    margin: 25px 0 15px 0;
+  }
+}

@@ -1,0 +1,12 @@
+.ant-select-selection--multiple {
+  height: 32px;
+  overflow: hidden;
+}
+.has-error .ant-select-selection--multiple {
+  overflow: visible;
+}
+.ant-form-item-control-wrapper .ant-form-item-control {
+  line-height: 32px;
+  height: 32px;
+  /*overflow: hidden;*/
+}

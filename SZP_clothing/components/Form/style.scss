@@ -1,0 +1,211 @@
+@import '../../public/base.scss';
+
+.form-lable{
+  display:inline-block;
+}
+.form-lable-text{
+  display:inline-block;
+  height:28px;
+  vertical-align: 10px;
+  margin-right:4px;
+}
+.ant-select-selection{
+  overflow:hidden;
+}
+.ant-select-selection--multiple{
+  height:28px;
+}
+.ml25{
+	margin-left: 25px;
+}
+// 行高30
+.ant-select-selection--multiple, .YH-form-item .ant-select-selection--single {
+  height: 30px;
+}
+.ant-form-inline .YH-form-item .ant-form-item-control {
+  height: 30px;
+  line-height: 30px;
+}
+.YH-form-item .ant-form-item-label {
+  line-height: 30px;
+}
+.no-required-icon .ant-form-item-required:before, .hiden{
+  display: none
+}
+// 校验提示信息
+.ant-form-inline .ant-form-explain {
+  // transform: translateY(-12px);
+  bottom: -15px;
+  // transform: scaleY(0.8);
+  white-space: nowrap;
+}
+element.style {
+  user-select: none;
+}
+// 空出下拉选择checkbox放在前面的位置
+.ant-select-dropdown--multiple .ant-select-dropdown-menu-item {
+  padding-left: 30px;
+}
+// 取消默认下拉选择勾
+.ant-select-dropdown.ant-select-dropdown--multiple .ant-select-dropdown-menu-item:after,
+.ant-select-dropdown.ant-select-dropdown--multiple .ant-select-dropdown-menu-item:hover:after,
+.ant-select-dropdown.ant-select-dropdown--multiple .ant-select-dropdown-menu-item-selected.ant-select-dropdown-menu-item:after,
+.ant-select-dropdown.ant-select-dropdown--multiple .ant-select-dropdown-menu-item-selected:hover.ant-select-dropdown-menu-item:after,
+.ant-select-dropdown.ant-select-dropdown--multiple .ant-select-dropdown-menu-item-active.ant-select-dropdown-menu-item:after,
+.ant-select-dropdown.ant-select-dropdown--multiple .ant-select-dropdown-menu-item-active.ant-select-dropdown-menu-item-selected.ant-select-dropdown-menu-item:after{
+  display: none;
+}
+// 下拉选择checkbox放在前面的样式
+.ant-select-dropdown--multiple .ant-select-dropdown-menu-item:before {
+  font-family: 'anticon';
+  content: "\E632";
+  color: transparent;
+  position: absolute;
+  display: inline-block;
+  border: 1px solid #b5b0af;
+  text-shadow: 0 0.1px 0, 0.1px 0 0, 0 -0.1px 0, -0.1px 0;
+  transition: all .2s ease;
+  left: 8px;
+  height: 14px;
+  transform: translateY(-50%);
+  top: 50%;
+  border-radius: 2px;
+  line-height: 14px;
+  font-weight: bold;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1, M12=0, M21=0, M22=1)";
+  text-rendering: optimizeLegibility;
+  /* font-size: 12px;
+  font-size: 10px \9;
+  transform: scale(.83333333) rotate(0deg);
+  zoom: 1;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);*/
+}
+.ant-select-dropdown-menu-item:hover:before {
+  color: #ddd;
+}
+.ant-select-dropdown--multiple .ant-select-dropdown-menu-item-selected:before{
+  border: 1px solid transparent;
+  background-color: $color-coffee;
+  color: $color-light-khaki;
+}
+// 选择框高度调整，防止选择项居中
+.ant-select-selection--multiple .ant-select-selection__choice, .ant-select-selection--multiple .ant-select-selection__rendered .ant-select-selection__choice {
+  height: 22px;
+  line-height: 22px;
+  margin-bottom: 3px;
+  overflow: initial;
+}
+// 选中项一行显示
+.ant-select-selection__rendered > ul, ul.ant-select-selection__rendered {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+// 修复选中项一行显示导致占位字符向下移的问题
+.ant-select-selection--multiple div.ant-select-selection__rendered {
+  height: 100%;
+}
+// 解决表单校验导致高度变化问题
+.ant-form-inline .has-error {
+  height: 32px;
+}
+// 解决日期选择器高度变化问题
+.ant-form-inline .ant-input {
+  height: 30px;
+}
+// 表单隐藏
+.ant-form-inline .YH-form-item.none {
+  display: none;
+}
+// 邮件详情组件
+.emaile-details{
+   background: #fff;
+   border: 1px solid #e7e7e7;
+   .body-text{
+     padding: 30px;
+   }
+   .title{
+     height: 45px;
+     line-height: 45px;
+     border-bottom: 1px solid #e7e7e7;
+     text-align: right;
+   }
+   .link-from{
+     background: #f8f8f8;
+     border-bottom: 1px solid #e7e7e7;
+     height: 190px;
+     p{
+       height: 36px;
+       line-height: 36px;
+       letter-spacing: 1px;
+       span, b{
+         color: #adadad;
+         &:first-child{
+           width: 80px;
+           display: inline-block;
+         }
+       }
+       b{
+         color: #666;
+         font-weight: 900px;
+         font-size: 14px;
+       }
+       .color{
+        color: $color-gold-orange;
+      }
+     }
+     .charge{
+           margin-right: 5px;
+       }
+   }
+   .back{
+     float: left;
+     transform: translateY(8px);
+   }
+   .body-text{
+     min-height: 300px;
+   }
+   .under-download{
+     background: #f8f8f8;
+     min-height: 50px;
+     line-height: 50px;
+     span{
+      display: inline-block;
+    }
+   }
+}
+.link-next{
+  height: 45px;
+  line-height: 45px;
+  background: #fff;
+  margin-top: 10px;
+  display: flex;
+  .next-read{
+    color: #b6b6b6;
+  }
+  .next-active-link{
+    flex: 1;
+    cursor: pointer;
+    &:hover{
+      color: $color-gold-orange;
+    }
+  }
+  i {
+    width: 50px;
+    height: 47px;
+    line-height: 47px;
+    font-size: 15px;
+    color: #b6b6b6;
+    display: inline-block;
+  }
+}
+// 表单圆角变直角
+.YH-form-item .ant-select-selection, .YH-form-item .ant-input {
+  border-radius: 0;
+}
+// 表单行高
+.ant-form .YH-form-item.ant-form-item {
+  margin-bottom: 12px;
+}

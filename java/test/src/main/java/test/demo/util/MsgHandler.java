@@ -10,7 +10,7 @@ public class MsgHandler extends Throwable implements Serializable{
     /**
      * 处理状态
      */
-    private String status;
+    private String code;
 
     /**
      * 消息句柄
@@ -20,16 +20,7 @@ public class MsgHandler extends Throwable implements Serializable{
     /**
      * 内容句柄
      */
-    private Object context;
-    private String code;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    private Object result;
 
     public String getMessage() {
         return message;
@@ -39,20 +30,20 @@ public class MsgHandler extends Throwable implements Serializable{
         this.message = message;
     }
 
-    public Object getContext() {
-        return context;
-    }
-
-    public void setContext(Object context) {
-        this.context = context;
-    }
-
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Object getResult() {
+        return result;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
     }
 
 }

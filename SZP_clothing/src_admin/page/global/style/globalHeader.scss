@@ -1,0 +1,52 @@
+
+.header {
+  padding: 0 12px 0 0;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  position: relative;
+  line-height: 60px;
+  height: 60px;
+  margin-bottom: 2px;
+  z-index: 99;
+  // overflow: hidden;
+  min-width: 1100px;
+}
+.headerMenu {
+  display: flex;
+  font-size: 15px;
+  div {
+    cursor: pointer;
+    margin-left: 20px;
+  }
+}
+.logo{
+  float: left;
+  // background: url('/image/loginLogo.png') no-repeat 50% 50% #fa7641;
+  width: 150px;
+  height: 60px;
+  line-height: 60px;
+  vertical-align: middle;
+  margin-left: 45px;
+  margin-right: 25px;
+  h1{
+    font-family:sans-serif;
+    margin: 0;
+    color: #1890ff;
+  }
+}
+.trigger{
+  float: left;
+  line-height: 60px !important;
+  margin-left: 10px;
+}
+.logout{
+  float: right;
+  height: 60px;
+  width: 49px;
+  // display: block;
+  background: url('/image/logout.png') no-repeat 50%;
+  background-color: #1890ff;
+  cursor: pointer;
+  &:hover{}
+    // border-left: 1px solid #ff895a;
+}

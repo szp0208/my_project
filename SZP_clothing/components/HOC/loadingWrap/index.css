@@ -1,0 +1,99 @@
+@keyframes loading{
+  0% {transform: rotate(0deg);}
+  6% {transform: rotate(30deg);}
+  12% {transform: rotate(60deg);}
+  18% {transform: rotate(90deg);}
+  24% {transform: rotate(120deg);}
+  30% {transform: rotate(150deg);}
+  36% {transform: rotate(180deg);}
+  42% {transform: rotate(210deg);}
+  48% {transform: rotate(240deg);}
+  54% {transform: rotate(270deg);}
+  60% {transform: rotate(300deg);}
+  66% {transform: rotate(330deg);}
+  100% {transform: rotate(360deg);}
+}
+.mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #373737;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 1;
+}
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.point5Loading {
+  position: absolute;
+  animation: 1.6s step-start infinite loading;
+}
+.point5 {
+  position: absolute;
+  top: -30px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  background-color: #01a2fe;
+  border-radius: 50%;
+}
+.point4Loading {
+  position: absolute;
+  animation: 1.6s step-start infinite loading 80ms;
+}
+.point4 {
+  position: absolute;
+  top: -29px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  background-color: #01a2fe;
+  border-radius: 50%;
+}
+.point3Loading {
+  position: absolute;
+  animation: 1.6s step-start infinite loading 160ms;
+}
+.point3 {
+  position: absolute;
+  top: -28px;
+  left: -3px;
+  width: 6px;
+  height: 6px;
+  background-color: #01a2fe;
+  border-radius: 50%;
+}
+.point2Loading {
+  position: absolute;
+  animation: 1.6s step-start infinite loading 240ms;
+}
+.point2 {
+  position: absolute;
+  top: -27px;
+  left: -2px;
+  width: 4px;
+  height: 4px;
+  background-color: #01a2fe;
+  border-radius: 50%;
+}
+.point1Loading {
+  position: absolute;
+  animation: 1.6s step-start infinite loading 320ms;
+}
+.point1 {
+  position: absolute;
+  top: -26px;
+  left: -1px;
+  width: 2px;
+  height: 2px;
+  background-color: #01a2fe;
+  border-radius: 50%;
+}
+.hiden {
+  display: none;
+}

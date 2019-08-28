@@ -7,6 +7,8 @@ public class User {
 
     private String password;
 
+    private String login_token;
+
     public Integer getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getLogin_token() {
+        return login_token;
+    }
+
+    public void setLogin_token(String login_token) {
+        this.login_token = login_token == null ? null : login_token.trim();
     }
 }

@@ -1,0 +1,183 @@
+/*
+ * 覆盖 ant 默认样式
+ *
+ * 建议局部使用，less 中 import 后在组件根类中使用 mixin，参考 accountList 页面组件
+ */
+@primary-color: #04A9F5;
+
+.reset-button() {
+  button:not(.ant-modal-close) {
+    padding: 0;
+    width: 76px;
+
+    span {
+      line-height: 30px;
+      font-size: 13px;
+    }
+  }
+  button.ant-btn-primary:not([disabled]) {
+    background-image: linear-gradient(225deg, #04A9F5 0%, #049DF5 100%);
+    box-shadow: 0 1px 6px 0 rgba(74,144,226,0.21);
+    border-radius: 4px;
+    border-color: #04A9F5;
+  }
+  button + button {
+    margin-left: 10px;
+  }
+
+  button.ant-btn.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline):not(.ant-btn-icon-only) {
+    padding-left: 10px;
+  }
+}
+
+.reset-modal() {
+  .ant-modal-content {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .ant-modal-close-x {
+    font-weight: lighter;
+    font-size: 18px;
+    color: #b1b1b1;
+  }
+
+  .ant-modal-header {
+    border-color: #EBEBEB!important;
+  }
+
+  .ant-modal-footer {
+    border-top: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+}
+
+.reset-radio() {
+  .ant-radio-checked {
+    .ant-radio-inner {
+      border-color: @primary-color!important;
+
+      &:after {
+        background-color: @primary-color!important;
+      }
+    }
+  }
+}
+.reset-checkbox() {
+  .ant-checkbox-checked, .ant-checkbox-indeterminate {
+    .ant-checkbox-inner {
+      background-color: @primary-color;
+      border-color: @primary-color;
+    }
+  }
+}
+.reset-switch() {
+  .ant-switch-checked {
+    background-color: @primary-color;
+  }
+}
+
+
+.mix-page-result-table() {
+  @border-color: #F0F0F0;
+
+  .page__result-table {
+    background-color: #fff;
+    padding: 18px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.06);
+    min-height: 538px;
+
+    .ant-table {
+      min-height: 470px;
+    }
+
+    .ant-table-placeholder {
+      height: 458px;
+      line-height: 458px;
+      border: none;
+      border-bottom: 1px solid @border-color;
+    }
+
+    .ant-table-thead th {
+      height: 44px;
+      font-size: 13px;
+      color: #36455D;
+      background-color: #F9FAFB;
+    }
+    .ant-table-tbody td {
+      height: 50px;
+      font-size: 13px;
+      color: #585F6E;
+    }
+
+    .ant-pagination {
+      margin-bottom: 0;
+    }
+
+    // border
+    table, th, td {
+      border-color: @border-color;
+    }
+  }
+
+  .page__result-table.border-out {
+    table {
+      border-top: 1px solid @border-color;
+      border-left: 1px solid @border-color;
+      border-right: 1px solid @border-color;
+    }
+
+    .ant-table-placeholder {
+      border-left: 1px solid @border-color;
+      border-right: 1px solid @border-color;
+      border-bottom: 1px solid @border-color;
+    }
+  }
+}
+
+/*
+ * 页面查询表单样式
+ *
+ * 使用时需要将 查询项使用 FormItem 包裹，提交、重置等按钮使用 div.form-btn-box 包裹
+ * DataEntry(Input/Select等)组件固定宽度 180px，label 宽不固定，根据页面宽度自动排列 FormItem，剩余空间 space-between
+ */
+.mix-page-search-form() {
+  .page__search-form {
+    background-color: #fff;
+    width: 100%;
+    padding: 30px 20px 8px 20px !important;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.06);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .ant-form-item {
+      flex-grow: 1;
+      white-space: nowrap;
+      margin-bottom: 16px !important;
+    }
+    .ant-form-item-label {
+      text-align: right;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .ant-form-item-control-wrapper {
+      width: 180px;
+      display: inline-block;
+      vertical-align: middle;
+
+      .ant-calendar-picker {
+        width: 100%;
+      }
+    }
+
+    .form-btn-box {
+      flex-grow: 1;
+      text-align: right;
+      margin-bottom: 16px;
+    }
+  }
+}

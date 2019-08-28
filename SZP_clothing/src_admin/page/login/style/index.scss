@@ -1,0 +1,44 @@
+/*
+ * author: zero
+ * createdTime: 2018/01/18
+ * */
+
+@import "../../../../public/base.scss";
+
+$br-5: 5px;
+
+.login {
+  /* 背景 */
+  .bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #f3f7fe;
+  }
+
+  .centerBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFFFFF;
+    box-shadow: 0 10px 20px 0 rgba(61,157,250,0.23);
+    border-radius: $br-5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .leftImgBox {
+    flex-shrink: 0;
+    width: 440px;
+    height: 390px;
+    background: url('/image/login-banner.png') no-repeat center, linear-gradient(16deg, #02C8EA 0%, #2A6FD1 100%);
+    background-size: cover;
+    border-top-left-radius: $br-5;
+    border-bottom-left-radius: $br-5;
+  }
+  .rightFormBox {
+    padding: 5px 35px;
+    width: 275px;
+  }
+}
