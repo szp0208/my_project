@@ -1,18 +1,18 @@
 import userReducer from './userReducer'
 import {initState} from '../models'
 
-import userCenterReducer from '../../page/userCenter/redux/reducer'
+import staffCenterReducer from '../../page/staffCenter/redux/reducer'
 
 let rootReducer = (state = initState, action) => {
   let user = userReducer(state, action),
-    userCenter = userCenterReducer(state.userCenter, action),
+    staffCenter = staffCenterReducer(state.staffCenter, action),
 
     newState
   newState = {
     previewData: user.previewData,
     userInfos: user.userInfos,
     userLoation: user.userLoation,
-    userCenter,
+    staffCenter,
   }
 	//信息优先级处
   return newState

@@ -6,7 +6,9 @@ import test.demo.bean.User;
 @Repository
 public interface UserMapper {
 
-    User select(String name);
+    User selectByName(String name);
+
+    User selectByPhone(String phone);
 
     User selectid(Integer id);
 

@@ -52,8 +52,6 @@ function hasCache(data, url, api) {
   )
 }
 export function generateUrl(api, searchParams, urlParams, replaceParams) {
-  console.log(api)
-  return;
   let url = `${host[api.config.host.toLocaleUpperCase()]}${api.url}`
   if (replaceParams) {
     for (const key in replaceParams) {
@@ -151,7 +149,7 @@ function getApiData(options) {
           }
           clearTimeout(timeOutFlag)
           // loginToken = res.headers.get(LOGIN_TOKEN)
-          loginToken = (url.indexOf('ucenter/login') > -1) ? res.headers.get(LOGIN_TOKEN) : getVariant(LOGIN_TOKEN)
+          loginToken = (url.indexOf('api/login') > -1) ? res.headers.get(LOGIN_TOKEN) : getVariant(LOGIN_TOKEN)
           commitToken = res.headers.get(COMMIT_TOKEN)
           let contentType = res.headers.get('Content-Type')
 

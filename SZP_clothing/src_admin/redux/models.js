@@ -1,4 +1,4 @@
-import userCenter from '../page/userCenter/redux/modal' //用户中心
+import staffCenter from '../page/staffCenter/redux/modal' //用户中心
 
 // 初始化数据
 export const previewData = '未登录' // 登录状态
@@ -10,5 +10,5 @@ export const initState = {
   userInfos,
   userLoation,
 
-  userCenter,
+  staffCenter,
 }

@@ -13,7 +13,10 @@ public class UserService {
     private UserMapper userMapper;
 
     public User getListByName(String name) {
-        return userMapper.select(name);
+        return userMapper.selectByName(name);
+    }
+    public User getListByPhone(String phone) {
+        return userMapper.selectByPhone(phone);
     }
     public User findUserById(Integer id) {
         return userMapper.selectid(id);

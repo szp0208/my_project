@@ -9,72 +9,24 @@ const confirm = Modal.confirm
 import {connect} from 'react-redux'
 import {mapDispatchToProps} from '../redux/mapDispatchToProps'
 @connect(
-  state => ({...state.frozen}),
+  state => ({...state.staffCenter}),
   mapDispatchToProps
 )
 
 export default class App extends PureComponent{
   constructor(){
     super();
-    this.columns = [{
-      title: '操作',
-      width: 120,
-      key: '',
-      dataIndex: '',
-      render: (text, record, index) => (
-        <div className="tableOperation">
-            <span style={{color:'#1890ff'}} onClick={() => {
-              this.handleEdit(record);
-            }}>{record.supplierStatus==0?'冻结':'取消冻结'}</span>
-        </div>),
-    },{
-      title: '采购组织',
-      width: 100,
-      key: 'procurementOrganizationCode',
-      dataIndex: 'procurementOrganizationCode'
-    },{
-      title: '采购组织名称',
-      width: 200,
-      key: 'procurementOrganizationName',
-      dataIndex: 'procurementOrganizationName'
-    },{
-      title: '供应商代码',
-      width: 100,
-      key: 'supplierCode',
-      dataIndex: 'supplierCode'
-    },{
-      title: '供应商名称',
-      width: 200,
-      key: 'supplierName',
-      dataIndex: 'supplierName'
-    },{
-      title: '冻结状态',
-      width: 100,
-      key: 'supplierStatus',
-      dataIndex: 'supplierStatus',
-      render:(text)=>{
-        switch (text) {
-          case '0': return '未冻结';break;
-          case '1': return '冻结';break;
-        }
+    this.columns = [
+      {
+        title: '员工ID',
+        width: 80,
+        key: 'id',
+        dataIndex: 'id'
       }
-    },{
-      title: '更改时间',
-      width: 100,
-      key: 'updateTime',
-      dataIndex: 'updateTime',
-      render:(text)=>{
-        return new Date(text).toLocaleDateString().replace(/\//g,'-')
-      }
-    },{
-      title: '更改人',
-      width: 80,
-      key: 'updateBy',
-      dataIndex: 'updateBy'
-    }]; //表格头
+    ]
   }
   componentDidMount() {
-    const {handleGetList, searchParams, page, size} = this.props
+    const {handleGetList, searchParams, page, size} = this.props;
     handleGetList({searchParams: {page, size, ...searchParams}})
   }
   //修改冻结状态

@@ -11,6 +11,9 @@ import test.demo.util.MsgHandler;
 import test.demo.util.StringUtils;
 import test.demo.util.TokenUtil;
 
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -18,22 +21,24 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public MsgHandler getData(@RequestBody User user) throws Exception {
+    public MsgHandler getData(@RequestBody User user, ServletResponse response) throws Exception {
         MsgHandler handler = new MsgHandler();
         //判断是否为空-未传
-        if (StringUtils.isNull(user.getName()) || StringUtils.isNull(user.getPassword())){
-            handler.setMessage("用户名或者密码未填写");
+        if (StringUtils.isNull(user.getPhone()) || StringUtils.isNull(user.getPassword())){
+            handler.setMessage("手机号或者密码未填写");
             handler.setCode("400");
             return handler;
         }
 
         User info = new User();
-        info = userService.getListByName(user.getName());
+        info = userService.getListByPhone(user.getPhone());
         if(StringUtils.isNull(info)) {
             handler.setMessage("该用户不存在");
         } else {
             if(info.getPassword().equals(user.getPassword())) { //用equals方法比较两个String的值是否相等，==比较的是地址是否相同
-                info.setLogin_token(TokenUtil.createJWT(100000, info)); //返回token
+                HttpServletResponse rep = (HttpServletResponse) response;   //请求接口的地址参数对象
+                rep.setHeader("login_token", TokenUtil.createJWT(100000, info));    //返回头中设置login_token
+                info.setPassword("******"); //处理返回的密码
                 handler.setResult(info);
                 handler.setMessage("success");
             } else {

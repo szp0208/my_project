@@ -1,7 +1,3 @@
-/*
- * author: shizhipeng
- * createdTime: 2019/07/23
- * */
 import {Bread} from 'Bread';
 import React, {PureComponent} from 'react';
 import {
@@ -12,7 +8,7 @@ import {
 import {connect} from 'react-redux'
 import {mapDispatchToProps} from './redux/mapDispatchToProps'
 @connect(
-  state => ({...state.frozen}),
+  state => ({...state.staffCenter}),
   mapDispatchToProps
 )
 
@@ -23,7 +19,7 @@ export default class App extends PureComponent{
   render(){
     return(
       <section>
-        <Bread route={['供应商对账', '供应商冻结']}></Bread>
+        <Bread route={['员工管理', '员工中心']}></Bread>
         <Form/>
         <Table />
       </section>

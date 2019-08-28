@@ -8,7 +8,13 @@
   <!--<result column="sex" jdbcType="VARCHAR" property="sex" />-->
   <!--</resultMap>-->
 
-  <select id="select" resultType="test.demo.bean.User" parameterType="test.demo.bean.User">
+  <select id="selectByPhone" resultType="test.demo.bean.User" parameterType="test.demo.bean.User">
+    select
+    *
+    from user where phone = #{phone}
+  </select>
+
+  <select id="selectByName" resultType="test.demo.bean.User" parameterType="test.demo.bean.User">
     select
     *
     from user where name = #{name}

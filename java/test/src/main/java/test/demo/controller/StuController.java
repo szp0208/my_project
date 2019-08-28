@@ -8,13 +8,13 @@ import test.demo.util.MsgHandler;
 import test.demo.util.StringUtils;
 
 @RestController
-@RequestMapping("/stud")
+@RequestMapping("/api/staff")
 public class StuController {
 
     @Autowired(required=true)
     private StuService stuService;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public MsgHandler userList() throws Exception {
         MsgHandler handler = new MsgHandler();
         handler.setResult(stuService.getList());
@@ -22,7 +22,7 @@ public class StuController {
         return handler;
     }
 
-    @RequestMapping(value = "/getId", method = RequestMethod.GET)
+    @RequestMapping(value = "/getListById", method = RequestMethod.GET)
     public MsgHandler userList(Stu stu) throws Exception {
         MsgHandler handler = new MsgHandler();
         //判断是否为空-未传

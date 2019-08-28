@@ -15,10 +15,10 @@ const login = Loadable({ loader: () => import('../page/login'), loading: Loading
 const home = Loadable({ loader: () => import('../page/home'), loading: Loading, render: bundleComponent('主页') })
 const notFound404 = Loadable({ loader: () => import('../page/notFound404'), loading: Loading, render: bundleComponent("你迷路了") })
 
-const userCenter = Loadable({  //员工管理中心
-  loader: () => import('../page/userCenter'),
+const staffCenter = Loadable({  //员工管理中心
+  loader: () => import('../page/staffCenter'),
   loading: Loading,
-  render: bundleComponent('员工管理')
+  render: bundleComponent('员工中心')
 })
 
 /**
@@ -32,9 +32,9 @@ const mainLayout = () =>
         <CacheRoute exact path='/gss/home' cacheKey='/gss/home' component={home} />
         {/*---------- 系统设置 system ----------*/}
         <CacheRoute exact
-          path='/gss/staffMag/userCenter'
-          cacheKey='/gss/staffMag/userCenter'
-          component={userCenter} title='员工管理'
+          path='/gss/staffMag/staffCenter'
+          cacheKey='/gss/staffMag/staffCenter'
+          component={staffCenter} title='员工中心'
         />
         {/*----------- 404  -------------------*/}
         <CacheRoute path="/gss/404" component={notFound404} />

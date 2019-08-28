@@ -5,8 +5,9 @@ const menuData = [
     path: 'gss/staffMag',
     children: [
       {
-        name: '员工',
-        path: 'userCenter',
+        name: '员工中心',
+        icon: 'dashboard',
+        path: 'staffCenter',
       }
     ]
   },

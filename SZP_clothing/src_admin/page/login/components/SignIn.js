@@ -50,14 +50,14 @@ class SignIn extends Component {
 
   requestLogin = () => {
     const {username, password} = this.state
-    return getData({api: API_LOGIN, data: {name: username, password: password}}).then(data => {
+    return getData({api: API_LOGIN, data: {phone: username, password: password}}).then(data => {
       if (data.code == 200000 && data.message === 'success') {
         // 本地缓存用户信息
         let userInfos = {
           email: data.result.email,
           id: data.result.id,
           nickname: data.result.nickname,
-          telephone: data.result.telephone,
+          telephone: data.result.phone,
           userNo: data.result.userNumber,
           username: data.result.name,
           workType: data.result.workType

@@ -3,11 +3,11 @@ package test.demo.bean;
 public class User {
     private Integer id;
 
+    private String phone;
+
     private String name;
 
     private String password;
-
-    private String login_token;
 
     public Integer getId() {
         return id;
@@ -15,6 +15,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getName() {
@@ -31,13 +39,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
-    }
-
-    public String getLogin_token() {
-        return login_token;
-    }
-
-    public void setLogin_token(String login_token) {
-        this.login_token = login_token == null ? null : login_token.trim();
     }
 }
