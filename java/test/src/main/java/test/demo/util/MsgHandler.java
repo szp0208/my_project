@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 通用消息传输模型
  */
-public class MsgHandler extends Throwable implements Serializable{
+public class MsgHandler implements Serializable{
 
     /**
      * 处理状态

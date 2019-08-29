@@ -32,7 +32,7 @@ export const handleGetList = (reqData) => (dispatch) => {
         size,
         tableLoading: false,
         total: data.result.total,
-        searchResult: data.result.list || []
+        searchResult: data.result || []
       }
     })
   }).catch(err => {

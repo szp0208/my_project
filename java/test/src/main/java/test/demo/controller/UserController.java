@@ -37,7 +37,7 @@ public class UserController {
         } else {
             if(info.getPassword().equals(user.getPassword())) { //用equals方法比较两个String的值是否相等，==比较的是地址是否相同
                 HttpServletResponse rep = (HttpServletResponse) response;   //请求接口的地址参数对象
-                rep.setHeader("login_token", TokenUtil.createJWT(100000, info));    //返回头中设置login_token
+                rep.setHeader("login-token", TokenUtil.createJWT(600000, info));    //返回头中设置login_token
                 info.setPassword("******"); //处理返回的密码
                 handler.setResult(info);
                 handler.setMessage("success");

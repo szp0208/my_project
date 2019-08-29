@@ -22,7 +22,37 @@ export default class App extends PureComponent{
         width: 80,
         key: 'id',
         dataIndex: 'id'
-      }
+      },
+      {
+        title: '姓名',
+        width: 80,
+        key: 'name',
+        dataIndex: 'name'
+      },
+      {
+        title: '昵称',
+        width: 80,
+        key: 'nickname',
+        dataIndex: 'nickname'
+      },
+      {
+        title: '性别',
+        width: 80,
+        key: 'sex',
+        dataIndex: 'sex'
+      },
+      {
+        title: '年龄',
+        width: 80,
+        key: 'age',
+        dataIndex: 'age'
+      },
+      {
+        title: '手机号',
+        width: 80,
+        key: 'phone',
+        dataIndex: 'phone'
+      },
     ]
   }
   componentDidMount() {

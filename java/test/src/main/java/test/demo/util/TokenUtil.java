@@ -54,6 +54,7 @@ public class TokenUtil {
         claims.put("id", user.getId());
         claims.put("username", user.getName());
         claims.put("password", user.getPassword());
+        claims.put("phone", user.getPhone());
 
         //生成签名的时候使用的秘钥secret,这个方法本地封装了的，一般可以从本地配置文件中读取，切记这个秘钥不能外露哦。它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。
         String key = generalKey();
