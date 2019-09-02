@@ -48,6 +48,7 @@ export default class App extends PureComponent{
         dataIndex: 'age'
       },
       {
+
         title: '手机号',
         width: 80,
         key: 'phone',

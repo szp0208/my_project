@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chosien.dao.TumorMapper">
+    <select id="tumorList" resultType="cn.chosien.bean.SearchReq" parameterType="cn.chosien.bean.BaseVo">
+        select
+        tumor_id as id,
+        full_name as name,
+        1 as type
+        from tumor where 1=1
+        <if test="searchName != null">
+            and full_name like '%${searchName}%'
+        </if>
+    </select>
+
+    <select id="info" resultType="cn.chosien.bean.Tumor" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from tumor where tumor_id = #{tumor_id}
+    </select>
+
+    <select id="list" resultType="cn.chosien.bean.Tumor" >
+        select
+        *
+        from tumor
+    </select>
+
+
+    <select id="tumorStage" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from tumor_stage where tumor_id = #{tumor_id}
+        <if test="idlist != null">
+        AND gene_id in
+        <foreach collection="idlist" item="item" index="index"
+                 open="(" separator="," close=" )">
+            #{item}
+        </foreach>
+        </if>
+        <if test="orderName != null and orderType != null">
+            order by ${orderName} ${orderType}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT ${start},${count}
+        </if>
+    </select>
+
+    <select id="tumorStageCount" resultType="int" parameterType="cn.chosien.bean.Tumor">
+        select
+        count(*)
+        from tumor_stage where tumor_id = #{tumor_id}
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="tumorTissue" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from tumor_tissue where tumor_id = #{tumor_id}
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderName != null and orderType != null">
+            order by ${orderName} ${orderType}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT ${start},${count}
+        </if>
+    </select>
+
+    <select id="tumorTissueCount" resultType="int" parameterType="cn.chosien.bean.Tumor">
+        select
+       count(*)
+        from tumor_tissue where tumor_id = #{tumor_id}
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="tumorSurviavl" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from tumor_survival where tumor_id = #{tumor_id}
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderName != null and orderType != null">
+            order by ${orderName} ${orderType}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT ${start},${count}
+        </if>
+    </select>
+
+    <select id="tumorSurviavlCount" resultType="int" parameterType="cn.chosien.bean.Tumor">
+        select
+        count(*)
+        from tumor_survival where tumor_id = #{tumor_id}
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="tumorTranscriptFactor" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from correlation_transcript_factor where tumor_id = #{tumor_id}
+        <if test="correlation_coefficent != null">
+            and  ABS(correlation_coefficent) > ${correlation_coefficent}
+        </if>
+        <if test="p_value != null">
+            and   ${p_value} > p_value
+        </if>
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderName != null and orderType != null">
+            order by ${orderName} ${orderType}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT ${start},${count}
+        </if>
+    </select>
+    <select id="tumorTranscriptFactorCount" resultType="int" parameterType="cn.chosien.bean.Tumor">
+        select
+        count(*)
+        from correlation_transcript_factor where tumor_id = #{tumor_id}
+        <if test="correlation_coefficent != null">
+            and   ABS(correlation_coefficent) > ${correlation_coefficent}
+        </if>
+        <if test="p_value != null">
+            and   ${p_value} > p_value
+        </if>
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="tumorLncRna" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from correlation_lncrna where tumor_id = #{tumor_id}
+        <if test="correlation_coefficent != null">
+            and   ABS(correlation_coefficent) > ${correlation_coefficent}
+        </if>
+        <if test="p_value != null">
+            and   ${p_value} > p_value
+        </if>
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderName != null and orderType != null">
+            order by ${orderName} ${orderType}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT ${start},${count}
+        </if>
+    </select>
+    <select id="tumorLncRnaCount" resultType="int" parameterType="cn.chosien.bean.Tumor">
+        select
+          count(*)
+        from correlation_lncrna where tumor_id = #{tumor_id}
+        <if test="correlation_coefficent != null">
+            and   ABS(correlation_coefficent) > ${correlation_coefficent}
+        </if>
+        <if test="p_value != null">
+            and   ${p_value} > p_value
+        </if>
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="tumorMirrna" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from correlation_mirrna where tumor_id = #{tumor_id}
+        <if test="correlation_coefficent != null">
+            and  ABS(correlation_coefficent) > ${correlation_coefficent}
+        </if>
+        <if test="p_value != null">
+            and   ${p_value} > p_value
+        </if>
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+        <if test="orderName != null and orderType != null">
+            order by ${orderName} ${orderType}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT ${start},${count}
+        </if>
+    </select>
+    <select id="tumorMirrnaCount" resultType="int" parameterType="cn.chosien.bean.Tumor">
+        select
+         count(*)
+        from correlation_mirrna where tumor_id = #{tumor_id}
+        <if test="correlation_coefficent != null">
+            and  ABS(correlation_coefficent) > ${correlation_coefficent}
+        </if>
+        <if test="p_value != null">
+            and   ${p_value} > p_value
+        </if>
+        <if test="idlist != null">
+            AND gene_id in
+            <foreach collection="idlist" item="item" index="index"
+                     open="(" separator="," close=" )">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="tumorFilterDetails" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from tumor_filter_details where tumor_id = #{tumor_id}
+    </select>
+
+    <select id="phenoAndSurv" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        select
+        *
+        from `${tableName}` pas
+        JOIN scatter_ag sag ON pas.submitter_id_samples = sag.pt
+
+            WHERE 1 = 1
+        <if test="condition!=null">
+            and ${condition}
+        </if>
+        <if test="gene_id!=null">
+            and
+            sag.gene_id = #{gene_id}
+        </if>
+    </select>
+
+
+    <select id="getGSEPlatform" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        SELECT
+        GSE_platform
+        FROM
+        GEO_matrix
+        WHERE
+        tumor_id = #{tumor_id}
+        GROUP BY
+        GSE_platform
+    </select>
+
+
+    <select id="getGeneInGEOMatrix" resultType="map" parameterType="cn.chosien.bean.Tumor">
+           SELECT
+            gene,
+            gene_id
+            FROM
+            GEO_matrix
+            WHERE
+        tumor_id = #{tumor_id}
+            GROUP BY
+            gene,
+            gene_id
+    </select>
+
+    <select id="getTCGA" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        SELECT
+    ga.time,ga.`event`,gm.`value`,ga.pt
+    FROM
+    GEO_follow ga
+    JOIN GEO_matrix gm ON ga.pt = gm.pt
+    and ga.tumor_id = gm.tumor_id
+    and ga.GSE_platform = gm.GSE_platform
+    WHERE
+    ga.tumor_id = #{tumor_id}
+        <if test="gene_id!=null">
+            AND
+            gm.gene_id = #{gene_id}
+        </if>
+        <if test="GSE_platform!=null">
+            and
+            ga.GSE_platform = #{GSE_platform}
+        </if>
+
+    </select>
+
+
+    <select id="getClinicalTrial" resultType="map" parameterType="cn.chosien.bean.Tumor">
+        SELECT
+        *
+        FROM
+        tumor_clinical_trial
+        WHERE
+        tumor_id = #{tumor_id}
+    </select>
+
+
+    <select id="getClinicalTrialCount" resultType="int" parameterType="cn.chosien.bean.Tumor">
+        SELECT
+        count(*)
+        FROM
+        tumor_clinical_trial
+        WHERE
+        tumor_id = #{tumor_id}
+    </select>
+</mapper>

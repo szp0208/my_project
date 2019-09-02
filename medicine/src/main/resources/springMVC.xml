@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+    <!--RequestMappingHandlerAdapter-->
+    <mvc:annotation-driven conversion-service="conversionService">
+        <mvc:message-converters register-defaults="true">
+            <!--<ref bean="stringHttpMessageConverter"/>-->
+            <!--<ref bean="fastJsonHttpMessageConverter"/>-->
+
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="objectMapper"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!--<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter"/>-->
+    <!--<bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4">-->
+    <!--<property name="supportedMediaTypes">-->
+    <!--<list>-->
+    <!--<value>text/html;charset=UTF-8</value>-->
+    <!--<value>application/json;charset=UTF-8</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--<property name="fastJsonConfig">-->
+    <!--<bean class="com.alibaba.fastjson.support.config.FastJsonConfig">-->
+    <!--<property name="features">-->
+    <!--<list>-->
+    <!--<value>AllowArbitraryCommas</value>-->
+    <!--<value>AllowUnQuotedFieldNames</value>-->
+    <!--<value>DisableCircularReferenceDetect</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--<property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"></property>-->
+    <!--</bean>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper">
+        <property name="dateFormat">
+            <bean class="cn.chosien.util.MySimpleDateFormat">
+                <constructor-arg>
+                    <value>yyyy-MM-dd'T'HH:mm:ss.SSSZ</value>
+                </constructor-arg>
+            </bean>
+        </property>
+        <property name="serializationInclusion">
+            <value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value>
+        </property>
+    </bean>
+    <!--  <bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig"/>-->
+    <!-- Serve static content-->
+
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="cn.chosien.util.DateFormatter"></bean>
+            </set>
+        </property>
+    </bean>
+    <!--  定义JSP文件的位置  -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--  默认访问跳转到登录页面(即定义无需Controller的url<->view直接映射)  -->
+    <mvc:view-controller path="/" view-name="forward:/index.jsp"/>
+    <mvc:default-servlet-handler/>
+    <context:annotation-config></context:annotation-config>
+
+    <mvc:cors>
+        <mvc:mapping path="/**" allow-credentials="true" allowed-methods="POST,GET,PUT,DELETE" allowed-origins="*"/>
+    </mvc:cors>
+
+    <context:component-scan base-package="cn.chosien"/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>
+    <task:scheduler id="qbScheduler" pool-size="10"/>
+
+    <!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <!-- 指定所上传文件的总大小不能超过10485760000B。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="10485760000"/>
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+
+</beans>

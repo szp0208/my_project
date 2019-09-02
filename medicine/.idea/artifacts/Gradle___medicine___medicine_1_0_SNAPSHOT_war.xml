@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Gradle : medicine : medicine-1.0-SNAPSHOT.war">
+    <output-path>$PROJECT_DIR$/../medicine/build/libs</output-path>
+    <properties id="gradle-properties">
+      <options external-project-path="$PROJECT_DIR$/../medicine" />
+    </properties>
+    <root id="archive" name="medicine-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Gradle : medicine : medicine-1.0-SNAPSHOT.war (exploded)" />
+    </root>
+  </artifact>
+</component>
