@@ -18,4 +18,8 @@ public class StaffCenterService {
     public List<test.demo.bean.StaffCenter> getStaffCenterList() {
         return staffCenterMapper.staffList();
     }
+
+    public Object selectByPrimaryKey(Integer id) {
+        return staffCenterMapper.selectByPrimaryKey(id);
+    }
 }

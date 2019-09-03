@@ -10,7 +10,7 @@
     <result column="phone" property="phone" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, sex, nickname, age, phone
+    id, name, sex, nickname, age, phone, code
   </sql>
   <select id="staffList" resultType="test.demo.bean.StaffCenter">
     select * from Staff_center

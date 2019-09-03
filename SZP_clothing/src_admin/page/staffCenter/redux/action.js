@@ -1,7 +1,11 @@
 import * as actionType from './actionType'
 import {getData} from 'util'
 import {
-  API_GET_STAFFCENTER_LIST
+  API_GET_STAFFCENTER_LIST,
+  API_GET_STAFFCENTER_DETAIL,
+  API_GET_STAFFCENTER_ADD,
+  API_GET_STAFFCENTER_UPDATE,
+  API_GET_STAFFCENTER_DELETE,
 } from 'api'
 
 //同步
@@ -21,7 +25,6 @@ export const handleGetList = (reqData) => (dispatch) => {
       reqObj[i] = reqObj[i].value
     }
   }
-  console.log(API_GET_STAFFCENTER_LIST)
   getData({api: API_GET_STAFFCENTER_LIST, ...reqData}).then(data => {
     // 相应的逻辑判断
     let {page, size} = reqData.searchParams;
@@ -37,6 +40,68 @@ export const handleGetList = (reqData) => (dispatch) => {
     })
   }).catch(err => {
     dispatch({ type: actionType.STAFFCENTER_UPDATE, data: {tableLoading: false} })
+    dispatch({
+      type: actionType.STAFFCENTER_FILE
+    })
+  })
+};
+
+// 获取详情数据
+export const getDetailInfo = (reqData) => (dispatch) => {
+  getData({api: API_GET_STAFFCENTER_DETAIL, ...reqData}).then(data => {
+    // 相应的逻辑判断
+    dispatch({
+      type: actionType.STAFFCENTER_UPDATE,
+      data: {
+        modalData: data.result || {},
+      }
+    })
+  }).catch(err => {
+    dispatch({
+      type: actionType.STAFFCENTER_FILE
+    })
+  })
+};
+
+// 新增员工
+export const handleCommitModal = (reqData, action, callBack) => (dispatch) => {
+  getData({api: API_GET_STAFFCENTER_ADD, ...reqData}).then(data => {
+    // 相应的逻辑判断
+    dispatch({
+      type: actionType.STAFFCENTER_UPDATE,
+      data: {
+        modalData: data.result || {},
+      }
+    })
+  }).catch(err => {
+    dispatch({
+      type: actionType.STAFFCENTER_FILE
+    })
+  })
+};
+
+// 编辑员工
+export const handleUpdateStaff = (reqData) => (dispatch) => {
+  getData({api: API_GET_STAFFCENTER_UPDATE, ...reqData}).then(data => {
+    // 相应的逻辑判断
+    dispatch({
+      type: actionType.STAFFCENTER_UPDATE,
+      data: {
+        modalData: data.result || {},
+      }
+    })
+  }).catch(err => {
+    dispatch({
+      type: actionType.STAFFCENTER_FILE
+    })
+  })
+};
+
+// 删除员工
+export const handleDeleteStaff = (reqData, callBack) => (dispatch) => {
+  getData({api: API_GET_STAFFCENTER_DELETE, ...reqData}).then(data => {
+    callBack && callBack(data)
+  }).catch(err => {
     dispatch({
       type: actionType.STAFFCENTER_FILE
     })

@@ -18,16 +18,43 @@ export default class App extends PureComponent{
     super();
     this.columns = [
       {
-        title: '员工ID',
+        title: '操作',
         width: 80,
-        key: 'id',
-        dataIndex: 'id'
+        key: '',
+        dataIndex: '',
+        render: (text, record, index) => (
+          <div>
+            <span style={{color:'#1890ff', marginRight: '10px', cursor: 'pointer'}} onClick={() => {
+              const {update} = this.props;
+              update({'isShowModal': true, 'action': 'detail', modalData: {id: record.id}});
+            }}>编辑</span>
+            <span style={{color:'red', cursor: 'pointer'}} onClick={() => {
+              const {handleDeleteStaff} = this.props;
+              confirm({
+                title: '温馨提示',
+                content: '确定删除该员工？',
+                okText: '确定',
+                width: 520,
+                cancelText: '取消',
+                onOk() {
+                  handleDeleteStaff({searchParams: {id: record.id}});
+                }
+              })
+            }}>删除</span>
+          </div>
+        ),
       },
       {
         title: '姓名',
         width: 80,
         key: 'name',
-        dataIndex: 'name'
+        dataIndex: 'name',
+      },
+      {
+        title: '员工编号',
+        width: 80,
+        key: 'code',
+        dataIndex: 'code'
       },
       {
         title: '昵称',

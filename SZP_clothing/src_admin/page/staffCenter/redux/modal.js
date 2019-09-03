@@ -7,5 +7,7 @@ const modals = {
   size: 10, // 当前分页数
   tableLoading: false, // 列表loading
   action:'',  //是否是编辑或者新增
+  isShowModal: false, //是否打开弹框
+  modalData: {},  //弹框详情数据
 }
 export default modals

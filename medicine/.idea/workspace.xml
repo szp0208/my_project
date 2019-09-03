@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ecb2575c-3e1f-433b-8213-3ea3f8d47263" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../SZP_clothing/api/settleController.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SZP_clothing/api/settleController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SZP_clothing/src_admin/page/staffCenter/components/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SZP_clothing/src_admin/page/staffCenter/components/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/bean/Staff_center.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/dao/Staff_centerMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/service/StudentService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/resources/generatorConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/resources/mapper/Staff_centerMapper.xml" beforeDir="false" />
-    </list>
+    <list default="true" id="ecb2575c-3e1f-433b-8213-3ea3f8d47263" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -128,8 +119,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/service/impl/ServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="163">
-              <caret line="309" column="11" lean-forward="true" selection-start-line="309" selection-start-column="11" selection-end-line="309" selection-end-column="11" />
+            <state relative-caret-position="3313">
+              <caret line="319" lean-forward="true" selection-start-line="319" selection-end-line="319" />
               <folding>
                 <element signature="e#6092#6093#0" expanded="true" />
                 <element signature="e#6144#6145#0" expanded="true" />
@@ -305,7 +296,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="-9" />
     <option name="y" value="-9" />
     <option name="width" value="1937" />
@@ -410,6 +401,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="EcmaScript&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -840,12 +832,12 @@
       <workItem from="1560502013575" duration="34000" />
       <workItem from="1560502243382" duration="870000" />
       <workItem from="1566350974685" duration="1639000" />
-      <workItem from="1567409878747" duration="1365000" />
+      <workItem from="1567409878747" duration="2056000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="276816000" />
+    <option name="totallyTimeSpent" value="277507000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -857,7 +849,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1549" height="845" extended-state="0" />
+    <frame x="-7" y="-7" width="1549" height="845" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.67713785" visible="true" weight="0.2334004" />
@@ -1247,8 +1239,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/service/impl/ServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="309" column="11" lean-forward="true" selection-start-line="309" selection-start-column="11" selection-end-line="309" selection-end-column="11" />
+        <state relative-caret-position="3313">
+          <caret line="319" lean-forward="true" selection-start-line="319" selection-end-line="319" />
           <folding>
             <element signature="e#6092#6093#0" expanded="true" />
             <element signature="e#6144#6145#0" expanded="true" />

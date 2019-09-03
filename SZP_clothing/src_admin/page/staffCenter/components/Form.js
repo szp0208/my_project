@@ -39,6 +39,15 @@ class App extends PureComponent{
     update({searchParams: {}, page: 1})
     handleGetList({searchParams: {page: 1, size}});
   }
+  //操作
+  operate(type) {
+    const {update} = this.props;
+    switch (type) {
+      case 1: //新增按钮
+        update({'isShowModal': true, 'action': 'add', modalData: {}})
+        break;
+    }
+  }
   render(){
     const {
       searchParams: {
@@ -63,6 +72,7 @@ class App extends PureComponent{
           <Col span={24}>
             <Row type='flex' justify='end'>
               <Button type='primary' className={style.mr10} onClick={()=>{ this.query() }}>查询</Button>
+              <Button type='primary' className={style.mr10} onClick={()=>{ this.operate(1) }}>新增</Button>
               <Button className={style.mr10} onClick={()=>{ this.reset() }}>重置</Button>
             </Row>
           </Col>

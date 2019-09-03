@@ -3,6 +3,7 @@ import React, {PureComponent} from 'react';
 import {
   Form,
   Table,
+  AddModal,
 } from './components'
 
 import {connect} from 'react-redux'
@@ -22,6 +23,9 @@ export default class App extends PureComponent{
         <Bread route={['员工管理', '员工中心']}></Bread>
         <Form/>
         <Table />
+        {
+          this.props.isShowModal ? <AddModal /> : null
+        }
       </section>
     )
   }
