@@ -1,6 +1,6 @@
 package test.demo.bean;
 
-public class StaffCenter {
+public class StaffCenter extends BaseVo {
     private Integer id;
 
     private String name;

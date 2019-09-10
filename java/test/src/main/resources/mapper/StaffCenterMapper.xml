@@ -14,6 +14,14 @@
   </sql>
   <select id="staffList" resultType="test.demo.bean.StaffCenter">
     select * from Staff_center
+    <if test="page != null and size != null">
+      LIMIT ${page},${size}
+    </if>
+  </select>
+  <select id="staffListCount" resultType="int" parameterType="java.lang.Integer">
+    select
+    count(*)
+    from Staff_center where id = #{id}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -25,11 +33,12 @@
     delete from staff_center
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="test.demo.bean.StaffCenter" >
-    insert into staff_center (id, name, sex, 
+<!--  给主键设置自增长：useGeneratedKeys="true"；keyProperty="userId"  表示将自增长后的Id赋值给实体类中的userId字段-->
+  <insert id="insert" parameterType="test.demo.bean.StaffCenter" useGeneratedKeys="true" keyProperty="id">
+    insert into staff_center (id, name, sex,
       nickname, age, phone
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
       #{nickname,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}
       )
   </insert>

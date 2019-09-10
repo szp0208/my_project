@@ -29,7 +29,7 @@ export default class App extends PureComponent{
               update({'isShowModal': true, 'action': 'detail', modalData: {id: record.id}});
             }}>编辑</span>
             <span style={{color:'red', cursor: 'pointer'}} onClick={() => {
-              const {handleDeleteStaff} = this.props;
+              const {handleDeleteStaff, handleGetList, searchParams, page, size} = this.props;
               confirm({
                 title: '温馨提示',
                 content: '确定删除该员工？',
@@ -37,7 +37,10 @@ export default class App extends PureComponent{
                 width: 520,
                 cancelText: '取消',
                 onOk() {
-                  handleDeleteStaff({searchParams: {id: record.id}});
+                  handleDeleteStaff({data: {id: record.id}}, (data)=>{
+                    message.success('删除成功');
+                    handleGetList({searchParams: {page, size, ...searchParams}})
+                  });
                 }
               })
             }}>删除</span>

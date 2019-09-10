@@ -54,8 +54,9 @@ class App extends PureComponent{
             reqObj[i] = reqObj[i].value
           }
         }
-        handleCommitModal({...reqObj}, action, (data) => {
+        handleCommitModal({data: reqObj}, action, (data) => {
           message.success('提交成功');
+          this.handleCloseModal();
           const {handleGetList, searchParams, page, size} = this.props;
           handleGetList({searchParams: {page, size, ...searchParams}})
         })
@@ -116,19 +117,40 @@ class App extends PureComponent{
             <Col span={8}>
               <FormItem
                 {...formItemLayout}
-                label="编号"
+                label="手机号码"
               >
-                {getFieldDecorator('code',{
-                  initialValue: modalData.code,
+                {getFieldDecorator('phone',{
+                  initialValue: modalData.phone,
                   rules:[{
                     required:true, message:'请填写'
                   }]
                 })(
                   <div className='commonInput'>
                     <div className='box'>
+                      <Input maxLength={11} value={modalData.phone} onChange={(e) => {
+                        this.onInputChange({'phone': e.target.value})
+                      }} />
+                    </div>
+                  </div>
+                )}
+              </FormItem>
+            </Col>
+            <Col span={8}>
+              <FormItem
+                {...formItemLayout}
+                label="编号"
+              >
+                {getFieldDecorator('code',{
+                  initialValue: modalData.code,
+                  rules:[{
+                    required:false, message:'请填写'
+                  }]
+                })(
+                  <div className='commonInput'>
+                    <div className='box'>
                       <Input value={modalData.code} onChange={(e) => {
                         this.onInputChange({'code': e.target.value})
-                      }} />
+                      }} disabled={true}/>
                     </div>
                   </div>
                 )}
@@ -142,7 +164,7 @@ class App extends PureComponent{
                 {getFieldDecorator('sex',{
                   initialValue: modalData.sex,
                   rules:[{
-                    required:true, message:'请填写'
+                    required:false, message:'请填写'
                   }]
                 })(
                   <div className='commonInput'>
@@ -163,7 +185,7 @@ class App extends PureComponent{
                 {getFieldDecorator('nickname',{
                   initialValue: modalData.nickname,
                   rules:[{
-                    required:true, message:'请填写'
+                    required:false, message:'请填写'
                   }]
                 })(
                   <div className='commonInput'>
@@ -184,34 +206,13 @@ class App extends PureComponent{
                 {getFieldDecorator('age',{
                   initialValue: modalData.age,
                   rules:[{
-                    required:true, message:'请填写'
+                    required:false, message:'请填写'
                   }]
                 })(
                   <div className='commonInput'>
                     <div className='box'>
                       <Input value={modalData.age} onChange={(e) => {
                         this.onInputChange({'age': e.target.value})
-                      }} />
-                    </div>
-                  </div>
-                )}
-              </FormItem>
-            </Col>
-            <Col span={8}>
-              <FormItem
-                {...formItemLayout}
-                label="手机号码"
-              >
-                {getFieldDecorator('phone',{
-                  initialValue: modalData.phone,
-                  rules:[{
-                    required:true, message:'请填写'
-                  }]
-                })(
-                  <div className='commonInput'>
-                    <div className='box'>
-                      <Input value={modalData.phone} onChange={(e) => {
-                        this.onInputChange({'phone': e.target.value})
                       }} />
                     </div>
                   </div>

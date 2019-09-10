@@ -7,6 +7,7 @@ import {
   API_GET_STAFFCENTER_UPDATE,
   API_GET_STAFFCENTER_DELETE,
 } from 'api'
+import {message} from 'antd'
 
 //同步
 export const update = (object) => ({
@@ -65,7 +66,8 @@ export const getDetailInfo = (reqData) => (dispatch) => {
 
 // 新增员工
 export const handleCommitModal = (reqData, action, callBack) => (dispatch) => {
-  getData({api: API_GET_STAFFCENTER_ADD, ...reqData}).then(data => {
+  getData({api: action=='add'?API_GET_STAFFCENTER_ADD:API_GET_STAFFCENTER_UPDATE, ...reqData}).then(data => {
+    if(data.code != 200) return message.error(data.message)
     // 相应的逻辑判断
     dispatch({
       type: actionType.STAFFCENTER_UPDATE,
@@ -73,6 +75,7 @@ export const handleCommitModal = (reqData, action, callBack) => (dispatch) => {
         modalData: data.result || {},
       }
     })
+    callBack&&callBack(data)
   }).catch(err => {
     dispatch({
       type: actionType.STAFFCENTER_FILE
@@ -100,6 +103,7 @@ export const handleUpdateStaff = (reqData) => (dispatch) => {
 // 删除员工
 export const handleDeleteStaff = (reqData, callBack) => (dispatch) => {
   getData({api: API_GET_STAFFCENTER_DELETE, ...reqData}).then(data => {
+    if(data.code != 200) return message.error(data.message)
     callBack && callBack(data)
   }).catch(err => {
     dispatch({

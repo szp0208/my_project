@@ -193,4 +193,18 @@ public class StringUtils {
         }
         return r;
     }
+
+    /**
+     * 根据id设置code员工编号
+     *
+     * @return
+     */
+    public static String setCodeById(Integer id) {
+        String str = id.toString();
+
+        while(str.length() < 4){
+            str = "0" + str ;
+        }
+        return "SW"+ str ;
+    }
 }

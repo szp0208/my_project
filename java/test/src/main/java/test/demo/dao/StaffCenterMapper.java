@@ -10,6 +10,8 @@ public interface StaffCenterMapper {
 
     List<StaffCenter> staffList();
 
+    int staffListCount(StaffCenter record);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(StaffCenter record);
