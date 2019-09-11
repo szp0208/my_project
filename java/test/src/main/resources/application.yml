@@ -23,6 +23,8 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
+#    jackson:
+#      default-property-inclusion: non_null
 mybatis:
   mapper-locations: mapper/*.xml
   type-aliases-package: test.demo.dao

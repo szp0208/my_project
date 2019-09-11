@@ -9,16 +9,16 @@ import java.util.List;
 public class Page<T>  {
 
     /** 总条数 */
-    private int totalNum = 0;
+    private int total = 0;
     /** 结果对象列表 */
     private List<T> items;
 
-    public int getTotalNum() {
-        return totalNum;
+    public int getTotal() {
+        return total;
     }
 
-    public void setTotalNum(int totalNum) {
-        this.totalNum = totalNum;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public List<T> getItems() {

@@ -1,16 +1,21 @@
 package test.demo.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/10/23.
  */
+//@JsonIgnoreProperties(ignoreUnknown = true)   //过滤某些字段不返回
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)  //不返回为null的字段
 public class BaseVo {
 
     // 分页起始位置
-    private String page;
+    private Integer page;
     // 分页条数
-    private String size;
+    private Integer size;
     // 搜索类型
     private String searchType;
     // 搜索值
@@ -24,47 +29,7 @@ public class BaseVo {
     //搜索类型
     private String type;
 
-    private String correlation_coefficent;
-
-    private String p_value;
-
-    private String tumor_id;
-
-    private String symbol;
-
     private List<String> idlist;
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public String getTumor_id() {
-        return tumor_id;
-    }
-
-    public void setTumor_id(String tumor_id) {
-        this.tumor_id = tumor_id;
-    }
-
-    public String getCorrelation_coefficent() {
-        return correlation_coefficent;
-    }
-
-    public void setCorrelation_coefficent(String correlation_coefficent) {
-        this.correlation_coefficent = correlation_coefficent;
-    }
-
-    public String getP_value() {
-        return p_value;
-    }
-
-    public void setP_value(String p_value) {
-        this.p_value = p_value;
-    }
 
     public List<String> getIdlist() {
         return idlist;
@@ -90,19 +55,19 @@ public class BaseVo {
         this.pageType = pageType;
     }
 
-    public String getPage() {
+    public Integer getPage() {
         return page;
     }
 
-    public void setPage(String page) {
+    public void setPage(Integer page) {
         this.page = page;
     }
 
-    public String getSize() {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
@@ -117,6 +82,7 @@ public class BaseVo {
     public String getSearchName() {
         return searchName;
     }
+
     public void setSearchName(String searchName) {
         //自动trim掉首位不可见字符
         if (searchName != null) {

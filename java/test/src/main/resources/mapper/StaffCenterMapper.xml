@@ -8,6 +8,7 @@
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
     <result column="age" property="age" jdbcType="INTEGER" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, sex, nickname, age, phone, code
@@ -15,13 +16,13 @@
   <select id="staffList" resultType="test.demo.bean.StaffCenter">
     select * from Staff_center
     <if test="page != null and size != null">
-      LIMIT ${page},${size}
+      LIMIT ${(page-1)*size},${size}
     </if>
   </select>
   <select id="staffListCount" resultType="int" parameterType="java.lang.Integer">
     select
     count(*)
-    from Staff_center where id = #{id}
+    from Staff_center
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -63,6 +64,9 @@
       <if test="phone != null" >
         phone,
       </if>
+      <if test="code != null" >
+        code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -82,6 +86,9 @@
       </if>
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -103,6 +110,9 @@
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -112,7 +122,8 @@
       sex = #{sex,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
-      phone = #{phone,jdbcType=VARCHAR}
+      phone = #{phone,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

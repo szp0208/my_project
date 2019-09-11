@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ecb2575c-3e1f-433b-8213-3ea3f8d47263" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../SZP_clothing/src_admin/page/staffCenter/components/AddModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SZP_clothing/src_admin/page/staffCenter/components/AddModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SZP_clothing/src_admin/page/staffCenter/components/Table.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SZP_clothing/src_admin/page/staffCenter/components/Table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../SZP_clothing/src_admin/page/staffCenter/redux/action.js" beforeDir="false" afterPath="$PROJECT_DIR$/../SZP_clothing/src_admin/page/staffCenter/redux/action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/bean/StaffCenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/bean/StaffCenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/bean/BaseVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/bean/BaseVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/bean/Page.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/bean/Page.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/controller/StaffCenterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/controller/StaffCenterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/dao/StaffCenterMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/dao/StaffCenterMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/service/StaffCenterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/service/StaffCenterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/util/StringUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/util/StringUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/test/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../java/test/src/main/resources/mapper/StaffCenterMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/resources/mapper/StaffCenterMapper.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -109,11 +107,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="170" column="48" selection-start-line="170" selection-start-column="38" selection-end-line="170" selection-end-column="48" />
+            <state relative-caret-position="4574">
+              <caret line="192" column="57" lean-forward="true" selection-start-line="192" selection-start-column="57" selection-end-line="192" selection-end-column="57" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -121,11 +119,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/springMVC.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/service/Service.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-314">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="205">
+              <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -136,8 +143,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/GeneMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="61">
-              <caret line="78" column="53" lean-forward="true" selection-start-line="78" selection-start-column="53" selection-end-line="78" selection-end-column="53" />
+            <state relative-caret-position="105">
+              <caret line="137" column="22" lean-forward="true" selection-start-line="137" selection-start-column="22" selection-end-line="137" selection-end-column="22" />
               <folding>
                 <marker date="1556444372970" expanded="true" signature="307:415" ph="select * fro... gene" />
                 <marker date="1556444372970" expanded="true" signature="641:702" ph="select * fro... gene" />
@@ -169,10 +176,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/dao/GeneMapper.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/bean/BaseVo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="34" />
+            <state relative-caret-position="119">
+              <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/bean/Gene.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="50">
+              <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -188,8 +207,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>tumor_surviavl</find>
-      <find>GENEm</find>
       <find>GENE</find>
       <find>GEN</find>
       <find>GE</find>
@@ -216,8 +233,10 @@
       <find>getGeneInGEOMatrix</find>
       <find>geneTissue</find>
       <find>geneMirnaCount</find>
-      <find>geneMirna</find>
       <find>geneLncRna</find>
+      <find>count</find>
+      <find>geneMirna</find>
+      <find>Logger</find>
     </findStrings>
     <replaceStrings>
       <replace>gene_id</replace>
@@ -294,11 +313,11 @@
   <component name="MavenProjectNavigator">
     <treeState />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
-    <option name="width" value="1938" />
-    <option name="height" value="1058" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-8" />
+    <option name="y" value="2" />
+    <option name="width" value="1934" />
+    <option name="height" value="1037" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -831,12 +850,12 @@
       <workItem from="1560502243382" duration="870000" />
       <workItem from="1566350974685" duration="1639000" />
       <workItem from="1567409878747" duration="2056000" />
-      <workItem from="1568104836204" duration="4036000" />
+      <workItem from="1568104836204" duration="8071000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="281543000" />
+    <option name="totallyTimeSpent" value="285578000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -848,10 +867,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1550" height="846" extended-state="0" />
-    <editor active="true" />
+    <frame x="-6" y="2" width="1547" height="829" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.67713785" visible="true" weight="0.23659517" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.67713785" visible="true" weight="0.23707186" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -907,7 +925,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mybatis/mybatis/3.3.1/b8911e00bb80bece8da02ed38d964bbcae1caf23/mybatis-3.3.1.jar!/org/apache/ibatis/javassist/tools/reflect/Sample.class" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_121/src.zip!/java/util/ArrayList.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/util/DateFormatter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -998,13 +1015,6 @@
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/4.2.5.RELEASE/a75e18322c7b362fe1daa26a245ae672ec0f3138/spring-context-4.2.5.RELEASE.jar!/org/springframework/context/config/spring-context-4.2.xsd" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/springMVC.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1235">
-          <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js" />
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.alibaba/druid/1.0.18/9e4da3cbebad34c9eb3900ef9dc30cb4a60cffe0/druid-1.0.18.jar!/support/http/resources/js/doT.js" />
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js" />
@@ -1109,24 +1119,10 @@
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/controller/TestController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="44" column="41" selection-start-line="44" selection-start-column="41" selection-end-line="44" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/dao/TestMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="175">
           <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradle.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
@@ -1158,24 +1154,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/bean/BaseVo.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/service/impl/ServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-286">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        <state relative-caret-position="329">
+          <caret line="139" column="4" selection-start-line="139" selection-start-column="4" selection-end-line="141" selection-end-column="5" />
+          <folding>
+            <element signature="e#3086#3087#0" expanded="true" />
+            <element signature="e#3136#3137#0" expanded="true" />
+            <element signature="e#6092#6093#0" expanded="true" />
+            <element signature="e#6144#6145#0" expanded="true" />
+            <element signature="e#8793#8794#0" expanded="true" />
+            <element signature="e#8841#8842#0" expanded="true" />
+            <element signature="e#9016#9017#0" expanded="true" />
+            <element signature="e#9083#9084#0" expanded="true" />
+            <element signature="e#9135#9136#0" expanded="true" />
+            <element signature="e#9192#9193#0" expanded="true" />
+            <element signature="e#9243#9244#0" expanded="true" />
+            <element signature="e#9305#9306#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/bean/Gene.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/service/Service.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="5" column="31" selection-start-line="5" selection-start-column="31" selection-end-line="5" selection-end-column="31" />
+        <state relative-caret-position="205">
+          <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/GeneMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="61">
-          <caret line="78" column="53" lean-forward="true" selection-start-line="78" selection-start-column="53" selection-end-line="78" selection-end-column="53" />
+        <state relative-caret-position="105">
+          <caret line="137" column="22" lean-forward="true" selection-start-line="137" selection-start-column="22" selection-end-line="137" selection-end-column="22" />
           <folding>
             <marker date="1556444372970" expanded="true" signature="307:415" ph="select * fro... gene" />
             <marker date="1556444372970" expanded="true" signature="641:702" ph="select * fro... gene" />
@@ -1205,55 +1218,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/dao/GeneMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="25" column="4" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/service/impl/ServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="139" column="4" selection-start-line="139" selection-start-column="4" selection-end-line="141" selection-end-column="5" />
-          <folding>
-            <element signature="e#3086#3087#0" expanded="true" />
-            <element signature="e#3136#3137#0" expanded="true" />
-            <element signature="e#6092#6093#0" expanded="true" />
-            <element signature="e#6144#6145#0" expanded="true" />
-            <element signature="e#8793#8794#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#9016#9017#0" expanded="true" />
-            <element signature="e#9083#9084#0" expanded="true" />
-            <element signature="e#9135#9136#0" expanded="true" />
-            <element signature="e#9192#9193#0" expanded="true" />
-            <element signature="e#9243#9244#0" expanded="true" />
-            <element signature="e#9305#9306#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/applicationContext.xml">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/bean/Page.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <caret line="8" column="23" lean-forward="true" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/controller/Controller.java">
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="170" column="48" selection-start-line="170" selection-start-column="38" selection-end-line="170" selection-end-column="48" />
+        <state relative-caret-position="150">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/springMVC.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/dao/GeneMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/controller/TestController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-444">
+          <caret line="44" column="41" selection-start-line="44" selection-start-column="41" selection-end-line="44" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/bean/Gene.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="3" lean-forward="true" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/bean/BaseVo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/service/Service.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/chosien/controller/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-314">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="4574">
+          <caret line="192" column="57" lean-forward="true" selection-start-line="192" selection-start-column="57" selection-end-line="192" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

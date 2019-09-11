@@ -1,5 +1,7 @@
 package test.demo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class StaffCenterController {
     @Autowired(required=true)
     private StaffCenterService staffCenterService;
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public MsgHandler staffList(StaffCenter vo) throws Exception {
@@ -31,17 +34,16 @@ public class StaffCenterController {
             if (i==0){
                 page.setItems(new ArrayList<>());
             }else {
-                page.setItems(staffCenterService.getStaffCenterList());
-                page.setTotalNum(i);
+                page.setItems(staffCenterService.getStaffCenterList(vo));
+                page.setTotal(i);
             }
             handler.setResult(page);
         }else {
             vo.setType("1");
-            handler.setResult(staffCenterService.getStaffCenterList());
+            handler.setResult(staffCenterService.getStaffCenterList(vo));
         }
-
-        handler.setResult(staffCenterService.getStaffCenterList());
         handler.setCode("200");
+        logger.info("这是一个info日志...");
         return handler;
     }
 

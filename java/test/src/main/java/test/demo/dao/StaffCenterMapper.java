@@ -4,11 +4,12 @@ import org.springframework.stereotype.Repository;
 import test.demo.bean.StaffCenter;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface StaffCenterMapper {
 
-    List<StaffCenter> staffList();
+    List<Map> staffList(StaffCenter record);
 
     int staffListCount(StaffCenter record);
 

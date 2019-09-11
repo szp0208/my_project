@@ -8,6 +8,7 @@ import test.demo.bean.StaffCenter;
 import test.demo.dao.StaffCenterMapper;
 
 import java.util.List;
+import java.util.Map;
 
 import static test.demo.util.StringUtils.setCodeById;
 
@@ -19,8 +20,8 @@ public class StaffCenterService {
     private StaffCenterMapper staffCenterMapper;
 
     //获取所有列表数据
-    public List<StaffCenter> getStaffCenterList() {
-        return staffCenterMapper.staffList();
+    public List<Map> getStaffCenterList(StaffCenter record) {
+        return staffCenterMapper.staffList(record);
     }
 
     //根据id获取详情
@@ -36,12 +37,13 @@ public class StaffCenterService {
         try {
             staffCenterMapper.insert(staffCenter);
             staffCenter.setCode(setCodeById(staffCenter.getId())); //设置唯一的code
+            staffCenterMapper.updateByPrimaryKey(staffCenter);  //自增code
             System.out.println("新增用户ID：" + staffCenter.getId());
             session.commit();
         } finally {
             session.close();
         }
-        return staffCenter;
+        return updateStaff(staffCenter);
     }
 
     //根据id变更员工数据
