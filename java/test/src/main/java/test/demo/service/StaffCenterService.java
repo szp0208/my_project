@@ -1,7 +1,10 @@
 package test.demo.service;
 
+import net.sf.json.JSONObject;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import test.demo.bean.StaffCenter;
@@ -14,6 +17,8 @@ import static test.demo.util.StringUtils.setCodeById;
 
 @Service
 public class StaffCenterService {
+    Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
     @Autowired
@@ -21,6 +26,7 @@ public class StaffCenterService {
 
     //获取所有列表数据
     public List<Map> getStaffCenterList(StaffCenter record) {
+        logger.info(String.valueOf(JSONObject.fromObject(record)));
         return staffCenterMapper.staffList(record);
     }
 
@@ -38,7 +44,6 @@ public class StaffCenterService {
             staffCenterMapper.insert(staffCenter);
             staffCenter.setCode(setCodeById(staffCenter.getId())); //设置唯一的code
             staffCenterMapper.updateByPrimaryKey(staffCenter);  //自增code
-            System.out.println("新增用户ID：" + staffCenter.getId());
             session.commit();
         } finally {
             session.close();
