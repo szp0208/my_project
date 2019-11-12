@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ecb2575c-3e1f-433b-8213-3ea3f8d47263" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../java/test/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/controller/StaffCenterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/controller/StaffCenterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/service/StaffCenterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/service/StaffCenterService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java/test/src/main/resources/generatorConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/resources/generatorConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/bean/LogInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/dao/LogInfoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/util/LogUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java/test/src/main/java/test/demo/util/LogUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java/test/src/main/resources/mapper/LogInfoMapper.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />

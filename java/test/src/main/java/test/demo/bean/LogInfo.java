@@ -23,6 +23,8 @@ public class LogInfo {
 
     private String exceptionMsg;
 
+    private Integer type;
+
     public Integer getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class LogInfo {
 
     public void setExceptionMsg(String exceptionMsg) {
         this.exceptionMsg = exceptionMsg == null ? null : exceptionMsg.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

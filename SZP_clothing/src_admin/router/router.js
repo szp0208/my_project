@@ -21,6 +21,17 @@ const staffCenter = Loadable({  //员工管理中心
   render: bundleComponent('员工中心')
 })
 
+const interfaces = Loadable({  //监控管理-接口监控
+  loader: () => import('../page/interfaces'),
+  loading: Loading,
+  render: bundleComponent('监控中心')
+})
+
+const journals =  Loadable({  //监控管理-异常日志
+  loader: () => import('../page/journals'),
+  loading: Loading,
+  render: bundleComponent('异常日志')
+})
 /**
  *  TODO:
  * 路由 以/gss//开头
@@ -35,6 +46,16 @@ const mainLayout = () =>
           path='/gss/staffMag/staffCenter'
           cacheKey='/gss/staffMag/staffCenter'
           component={staffCenter} title='员工中心'
+        />
+        <CacheRoute exact
+          path='/gss/monitor/interfaces'
+          cacheKey='/gss/monitor/interfaces'
+          component={interfaces} title='监控中心'
+        />
+        <CacheRoute exact
+          path='/gss/monitor/journals'
+          cacheKey='/gss/monitor/journals'
+          component={journals} title='异常日志'
         />
         {/*----------- 404  -------------------*/}
         <CacheRoute path="/gss/404" component={notFound404} />

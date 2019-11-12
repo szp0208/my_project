@@ -11,6 +11,23 @@ const menuData = [
       }
     ]
   },
+  {
+    name: '监控管理',
+    icon: 'dashboard',
+    path: 'gss/monitor',
+    children: [
+      {
+        name: '接口监控',
+        icon: 'dashboard',
+        path: 'interfaces',
+      },
+      {
+        name: '异常日志',
+        icon: 'dashboard',
+        path: 'journals',
+      }
+    ]
+  },
 ]
 
 function formatter(data, parentPath = '') {

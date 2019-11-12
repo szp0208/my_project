@@ -12,10 +12,11 @@
     <result column="requestParam" property="requestParam" jdbcType="VARCHAR" />
     <result column="exceptionName" property="exceptionName" jdbcType="VARCHAR" />
     <result column="exceptionMsg" property="exceptionMsg" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, method, beanName, intf, url, requestTime, requestIp, requestParam, exceptionName, 
-    exceptionMsg
+    exceptionMsg, type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,11 +32,11 @@
     insert into log_info (id, method, beanName, 
       intf, url, requestTime, 
       requestIp, requestParam, exceptionName, 
-      exceptionMsg)
+      exceptionMsg, type)
     values (#{id,jdbcType=INTEGER}, #{method,jdbcType=VARCHAR}, #{beanName,jdbcType=VARCHAR}, 
       #{intf,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{requestTime,jdbcType=TIMESTAMP}, 
       #{requestIp,jdbcType=VARCHAR}, #{requestParam,jdbcType=VARCHAR}, #{exceptionName,jdbcType=VARCHAR}, 
-      #{exceptionMsg,jdbcType=VARCHAR})
+      #{exceptionMsg,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="test.demo.bean.LogInfo" >
     insert into log_info
@@ -70,6 +71,9 @@
       <if test="exceptionMsg != null" >
         exceptionMsg,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -101,6 +105,9 @@
       </if>
       <if test="exceptionMsg != null" >
         #{exceptionMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -134,6 +141,9 @@
       <if test="exceptionMsg != null" >
         exceptionMsg = #{exceptionMsg,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -147,7 +157,8 @@
       requestIp = #{requestIp,jdbcType=VARCHAR},
       requestParam = #{requestParam,jdbcType=VARCHAR},
       exceptionName = #{exceptionName,jdbcType=VARCHAR},
-      exceptionMsg = #{exceptionMsg,jdbcType=VARCHAR}
+      exceptionMsg = #{exceptionMsg,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

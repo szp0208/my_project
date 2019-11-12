@@ -71,10 +71,11 @@ public class LogUtil {
             logInfo.setRequestTime(date);
             logInfo.setRequestIp(remoteAddr);
             logInfo.setRequestParam(param);
+            logInfo.setType(0);
 
             logger.info(String.valueOf(JSONObject.fromObject(logInfo)));
 
-            logInfoService.save(logInfo);   //保存日志到数据库
+//            logInfoService.save(logInfo);   //保存日志到数据库
         } catch (Exception e) {
         e.printStackTrace();
         }
@@ -115,6 +116,7 @@ public class LogUtil {
             Date date = new Date(beginTime);
             logInfo.setRequestTime(date);
             logInfo.setRequestIp(ip);
+            logInfo.setType(1);
 
             //保存数据库
             logger.info(String.valueOf(JSONObject.fromObject(logInfo)));

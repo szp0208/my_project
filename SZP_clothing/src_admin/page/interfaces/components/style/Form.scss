@@ -1,0 +1,72 @@
+
+@import "../../../../../public/base";
+.form {
+  background-color: #fff;
+  width: 100%;
+  padding: 15px !important;
+  line-height: 32px;
+  @extend %box-shadow;
+  .form-item {
+    display: inline-block;
+    margin-right: 16px;
+    margin-bottom: 12px;
+  }
+  .hignSearch{
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+    color: $color-blue;
+    line-height: 32px;
+    margin-right: 15px;
+  }
+  .transition {
+    transition: height 0.3s, padding 0.3s, transform 0.3s;
+  }
+  .aniSlideUp {
+    height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: none;
+  }
+  .aniRotate {
+    transform: rotate(180deg);
+  }
+  .targetHeight{
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #D2D3D4;
+    min-height: 47px;
+  }
+  .mw200 {
+    min-width: 200px;
+  }
+  .wp22 {
+    width: 30%
+  }
+  .mr10 {
+    margin-right: 10px;
+  }
+  .mr20 {
+    margin-right: 20px;
+  }
+  .w100 {
+    width: 100%;
+  }
+  .mb15{
+    margin-bottom: 15px;
+  }
+}
+.textAreaDiv {
+  position: relative;
+}
+.textAreaLabel {
+  position: absolute!important;
+  top: 0;
+  left: 0;
+  width: 108px;
+  text-align: right!important;
+}
+.textAreaInput {
+  margin-left: 108px;
+}
