@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test.demo.dao.PlayerMapper" >
+  <resultMap id="BaseResultMap" type="test.demo.bean.Player" >
+    <id column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="player_name" property="playerName" jdbcType="VARCHAR" />
+    <result column="player_lv" property="playerLv" jdbcType="SMALLINT" />
+    <result column="max_lv" property="maxLv" jdbcType="INTEGER" />
+    <result column="sys_gold" property="sysGold" jdbcType="INTEGER" />
+    <result column="user_gold" property="userGold" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="consume_lv" property="consumeLv" jdbcType="TINYINT" />
+    <result column="yx" property="yx" jdbcType="VARCHAR" />
+    <result column="yx_source" property="yxSource" jdbcType="VARCHAR" />
+    <result column="force_id" property="forceId" jdbcType="INTEGER" />
+    <result column="pic" property="pic" jdbcType="INTEGER" />
+    <result column="power_id" property="powerId" jdbcType="INTEGER" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="quit_time" property="quitTime" jdbcType="TIMESTAMP" />
+    <result column="daily_online_time" property="dailyOnlineTime" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="player_server_id" property="playerServerId" jdbcType="INTEGER" />
+    <result column="total_user_gold" property="totalUserGold" jdbcType="INTEGER" />
+    <result column="total_ticket_gold" property="totalTicketGold" jdbcType="INTEGER" />
+    <result column="gm" property="gm" jdbcType="INTEGER" />
+    <result column="default_pay" property="defaultPay" jdbcType="TINYINT" />
+    <result column="serverName_serverId_playerId" property="servernameServeridPlayerid" jdbcType="VARCHAR" />
+    <result column="gm_expires_time" property="gmExpiresTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    player_id, player_name, player_lv, max_lv, sys_gold, user_gold, user_id, consume_lv, 
+    yx, yx_source, force_id, pic, power_id, login_time, quit_time, daily_online_time, 
+    state, delete_time, create_time, player_server_id, total_user_gold, total_ticket_gold, 
+    gm, default_pay, serverName_serverId_playerId, gm_expires_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from player
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from player
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="test.demo.bean.Player" >
+    insert into player (player_id, player_name, player_lv, 
+      max_lv, sys_gold, user_gold, 
+      user_id, consume_lv, yx, 
+      yx_source, force_id, pic, 
+      power_id, login_time, quit_time, 
+      daily_online_time, state, delete_time, 
+      create_time, player_server_id, total_user_gold, 
+      total_ticket_gold, gm, default_pay, 
+      serverName_serverId_playerId, gm_expires_time
+      )
+    values (#{playerId,jdbcType=INTEGER}, #{playerName,jdbcType=VARCHAR}, #{playerLv,jdbcType=SMALLINT}, 
+      #{maxLv,jdbcType=INTEGER}, #{sysGold,jdbcType=INTEGER}, #{userGold,jdbcType=INTEGER}, 
+      #{userId,jdbcType=VARCHAR}, #{consumeLv,jdbcType=TINYINT}, #{yx,jdbcType=VARCHAR}, 
+      #{yxSource,jdbcType=VARCHAR}, #{forceId,jdbcType=INTEGER}, #{pic,jdbcType=INTEGER}, 
+      #{powerId,jdbcType=INTEGER}, #{loginTime,jdbcType=TIMESTAMP}, #{quitTime,jdbcType=TIMESTAMP}, 
+      #{dailyOnlineTime,jdbcType=INTEGER}, #{state,jdbcType=TINYINT}, #{deleteTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{playerServerId,jdbcType=INTEGER}, #{totalUserGold,jdbcType=INTEGER}, 
+      #{totalTicketGold,jdbcType=INTEGER}, #{gm,jdbcType=INTEGER}, #{defaultPay,jdbcType=TINYINT}, 
+      #{servernameServeridPlayerid,jdbcType=VARCHAR}, #{gmExpiresTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="test.demo.bean.Player" >
+    insert into player
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="playerId != null" >
+        player_id,
+      </if>
+      <if test="playerName != null" >
+        player_name,
+      </if>
+      <if test="playerLv != null" >
+        player_lv,
+      </if>
+      <if test="maxLv != null" >
+        max_lv,
+      </if>
+      <if test="sysGold != null" >
+        sys_gold,
+      </if>
+      <if test="userGold != null" >
+        user_gold,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="consumeLv != null" >
+        consume_lv,
+      </if>
+      <if test="yx != null" >
+        yx,
+      </if>
+      <if test="yxSource != null" >
+        yx_source,
+      </if>
+      <if test="forceId != null" >
+        force_id,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="powerId != null" >
+        power_id,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="quitTime != null" >
+        quit_time,
+      </if>
+      <if test="dailyOnlineTime != null" >
+        daily_online_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="deleteTime != null" >
+        delete_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="playerServerId != null" >
+        player_server_id,
+      </if>
+      <if test="totalUserGold != null" >
+        total_user_gold,
+      </if>
+      <if test="totalTicketGold != null" >
+        total_ticket_gold,
+      </if>
+      <if test="gm != null" >
+        gm,
+      </if>
+      <if test="defaultPay != null" >
+        default_pay,
+      </if>
+      <if test="servernameServeridPlayerid != null" >
+        serverName_serverId_playerId,
+      </if>
+      <if test="gmExpiresTime != null" >
+        gm_expires_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="playerId != null" >
+        #{playerId,jdbcType=INTEGER},
+      </if>
+      <if test="playerName != null" >
+        #{playerName,jdbcType=VARCHAR},
+      </if>
+      <if test="playerLv != null" >
+        #{playerLv,jdbcType=SMALLINT},
+      </if>
+      <if test="maxLv != null" >
+        #{maxLv,jdbcType=INTEGER},
+      </if>
+      <if test="sysGold != null" >
+        #{sysGold,jdbcType=INTEGER},
+      </if>
+      <if test="userGold != null" >
+        #{userGold,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeLv != null" >
+        #{consumeLv,jdbcType=TINYINT},
+      </if>
+      <if test="yx != null" >
+        #{yx,jdbcType=VARCHAR},
+      </if>
+      <if test="yxSource != null" >
+        #{yxSource,jdbcType=VARCHAR},
+      </if>
+      <if test="forceId != null" >
+        #{forceId,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=INTEGER},
+      </if>
+      <if test="powerId != null" >
+        #{powerId,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quitTime != null" >
+        #{quitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dailyOnlineTime != null" >
+        #{dailyOnlineTime,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=TINYINT},
+      </if>
+      <if test="deleteTime != null" >
+        #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="playerServerId != null" >
+        #{playerServerId,jdbcType=INTEGER},
+      </if>
+      <if test="totalUserGold != null" >
+        #{totalUserGold,jdbcType=INTEGER},
+      </if>
+      <if test="totalTicketGold != null" >
+        #{totalTicketGold,jdbcType=INTEGER},
+      </if>
+      <if test="gm != null" >
+        #{gm,jdbcType=INTEGER},
+      </if>
+      <if test="defaultPay != null" >
+        #{defaultPay,jdbcType=TINYINT},
+      </if>
+      <if test="servernameServeridPlayerid != null" >
+        #{servernameServeridPlayerid,jdbcType=VARCHAR},
+      </if>
+      <if test="gmExpiresTime != null" >
+        #{gmExpiresTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.demo.bean.Player" >
+    update player
+    <set >
+      <if test="playerName != null" >
+        player_name = #{playerName,jdbcType=VARCHAR},
+      </if>
+      <if test="playerLv != null" >
+        player_lv = #{playerLv,jdbcType=SMALLINT},
+      </if>
+      <if test="maxLv != null" >
+        max_lv = #{maxLv,jdbcType=INTEGER},
+      </if>
+      <if test="sysGold != null" >
+        sys_gold = #{sysGold,jdbcType=INTEGER},
+      </if>
+      <if test="userGold != null" >
+        user_gold = #{userGold,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="consumeLv != null" >
+        consume_lv = #{consumeLv,jdbcType=TINYINT},
+      </if>
+      <if test="yx != null" >
+        yx = #{yx,jdbcType=VARCHAR},
+      </if>
+      <if test="yxSource != null" >
+        yx_source = #{yxSource,jdbcType=VARCHAR},
+      </if>
+      <if test="forceId != null" >
+        force_id = #{forceId,jdbcType=INTEGER},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=INTEGER},
+      </if>
+      <if test="powerId != null" >
+        power_id = #{powerId,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null" >
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quitTime != null" >
+        quit_time = #{quitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dailyOnlineTime != null" >
+        daily_online_time = #{dailyOnlineTime,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=TINYINT},
+      </if>
+      <if test="deleteTime != null" >
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="playerServerId != null" >
+        player_server_id = #{playerServerId,jdbcType=INTEGER},
+      </if>
+      <if test="totalUserGold != null" >
+        total_user_gold = #{totalUserGold,jdbcType=INTEGER},
+      </if>
+      <if test="totalTicketGold != null" >
+        total_ticket_gold = #{totalTicketGold,jdbcType=INTEGER},
+      </if>
+      <if test="gm != null" >
+        gm = #{gm,jdbcType=INTEGER},
+      </if>
+      <if test="defaultPay != null" >
+        default_pay = #{defaultPay,jdbcType=TINYINT},
+      </if>
+      <if test="servernameServeridPlayerid != null" >
+        serverName_serverId_playerId = #{servernameServeridPlayerid,jdbcType=VARCHAR},
+      </if>
+      <if test="gmExpiresTime != null" >
+        gm_expires_time = #{gmExpiresTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.demo.bean.Player" >
+    update player
+    set player_name = #{playerName,jdbcType=VARCHAR},
+      player_lv = #{playerLv,jdbcType=SMALLINT},
+      max_lv = #{maxLv,jdbcType=INTEGER},
+      sys_gold = #{sysGold,jdbcType=INTEGER},
+      user_gold = #{userGold,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      consume_lv = #{consumeLv,jdbcType=TINYINT},
+      yx = #{yx,jdbcType=VARCHAR},
+      yx_source = #{yxSource,jdbcType=VARCHAR},
+      force_id = #{forceId,jdbcType=INTEGER},
+      pic = #{pic,jdbcType=INTEGER},
+      power_id = #{powerId,jdbcType=INTEGER},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      quit_time = #{quitTime,jdbcType=TIMESTAMP},
+      daily_online_time = #{dailyOnlineTime,jdbcType=INTEGER},
+      state = #{state,jdbcType=TINYINT},
+      delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      player_server_id = #{playerServerId,jdbcType=INTEGER},
+      total_user_gold = #{totalUserGold,jdbcType=INTEGER},
+      total_ticket_gold = #{totalTicketGold,jdbcType=INTEGER},
+      gm = #{gm,jdbcType=INTEGER},
+      default_pay = #{defaultPay,jdbcType=TINYINT},
+      serverName_serverId_playerId = #{servernameServeridPlayerid,jdbcType=VARCHAR},
+      gm_expires_time = #{gmExpiresTime,jdbcType=TIMESTAMP}
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </update>
+  <select id="getPlayerList" resultType="test.demo.bean.Player" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from player
+    <if test="page != null and size != null">
+      LIMIT ${(page-1)*size},${size}
+    </if>
+  </select>
+  <select id="playerListCount" resultType="int" parameterType="java.lang.Integer">
+    select
+    count(*)
+    from player
+  </select>
+</mapper>

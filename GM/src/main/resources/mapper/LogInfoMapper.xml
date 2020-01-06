@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test.demo.dao.LogInfoMapper" >
+  <resultMap id="BaseResultMap" type="test.demo.bean.LogInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="method" property="method" jdbcType="VARCHAR" />
+    <result column="beanName" property="beanName" jdbcType="VARCHAR" />
+    <result column="intf" property="intf" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="requestTime" property="requestTime" jdbcType="TIMESTAMP" />
+    <result column="requestIp" property="requestIp" jdbcType="VARCHAR" />
+    <result column="requestParam" property="requestParam" jdbcType="VARCHAR" />
+    <result column="exceptionName" property="exceptionName" jdbcType="VARCHAR" />
+    <result column="exceptionMsg" property="exceptionMsg" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, method, beanName, intf, url, requestTime, requestIp, requestParam, exceptionName, 
+    exceptionMsg, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from log_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from log_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="test.demo.bean.LogInfo" >
+    insert into log_info (id, method, beanName, 
+      intf, url, requestTime, 
+      requestIp, requestParam, exceptionName, 
+      exceptionMsg, type)
+    values (#{id,jdbcType=INTEGER}, #{method,jdbcType=VARCHAR}, #{beanName,jdbcType=VARCHAR}, 
+      #{intf,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{requestTime,jdbcType=TIMESTAMP}, 
+      #{requestIp,jdbcType=VARCHAR}, #{requestParam,jdbcType=VARCHAR}, #{exceptionName,jdbcType=VARCHAR}, 
+      #{exceptionMsg,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="test.demo.bean.LogInfo" >
+    insert into log_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="method != null" >
+        method,
+      </if>
+      <if test="beanName != null" >
+        beanName,
+      </if>
+      <if test="intf != null" >
+        intf,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="requestTime != null" >
+        requestTime,
+      </if>
+      <if test="requestIp != null" >
+        requestIp,
+      </if>
+      <if test="requestParam != null" >
+        requestParam,
+      </if>
+      <if test="exceptionName != null" >
+        exceptionName,
+      </if>
+      <if test="exceptionMsg != null" >
+        exceptionMsg,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="beanName != null" >
+        #{beanName,jdbcType=VARCHAR},
+      </if>
+      <if test="intf != null" >
+        #{intf,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestIp != null" >
+        #{requestIp,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParam != null" >
+        #{requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionName != null" >
+        #{exceptionName,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionMsg != null" >
+        #{exceptionMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.demo.bean.LogInfo" >
+    update log_info
+    <set >
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="beanName != null" >
+        beanName = #{beanName,jdbcType=VARCHAR},
+      </if>
+      <if test="intf != null" >
+        intf = #{intf,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        requestTime = #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestIp != null" >
+        requestIp = #{requestIp,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParam != null" >
+        requestParam = #{requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionName != null" >
+        exceptionName = #{exceptionName,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionMsg != null" >
+        exceptionMsg = #{exceptionMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.demo.bean.LogInfo" >
+    update log_info
+    set method = #{method,jdbcType=VARCHAR},
+      beanName = #{beanName,jdbcType=VARCHAR},
+      intf = #{intf,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      requestTime = #{requestTime,jdbcType=TIMESTAMP},
+      requestIp = #{requestIp,jdbcType=VARCHAR},
+      requestParam = #{requestParam,jdbcType=VARCHAR},
+      exceptionName = #{exceptionName,jdbcType=VARCHAR},
+      exceptionMsg = #{exceptionMsg,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

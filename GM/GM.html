@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GM-后台管理</title>
+</head>
+<style>
+    .login {
+        display: none;
+        width: 400px;
+        margin: 100px auto 0;
+    }
+    .login div {
+        width: 100%;
+        height: 50px;
+    }
+    .login span, .login input {
+        float: left;
+        margin-left: 15px;
+    }
+    .login span {
+        width: 80px;
+        text-align: right;
+    }
+    .login input {
+        width: 200px;
+    }
+    .loginBtn {
+        display: block;
+        width: 120px;
+        height: 33px;
+        text-align: center;
+        margin: 0 auto;
+        cursor: pointer;
+    }
+    .list {
+        display: none;
+        margin: 100px auto 0;
+    }
+    .list table {
+        width: 100%;
+        border: 1px solid #dcdcdc;
+    }
+    .list tr {
+        height: 38px;
+    }
+    .list td {
+        text-align: center;
+    }
+    .operateTd {
+        color: #00a2ff;
+        cursor: pointer;
+    }
+    .info {
+        display: none;
+    }
+    .submitData {
+        display: block;
+        width: 80px;
+        line-height: 31px;
+        cursor: pointer;
+    }
+</style>
+<body>
+<div class="login">
+<!--    <div style="text-align: center">GM-后台管理登录</div>-->
+    <div>
+        <span>用户名：</span>
+        <input class="name" type="text">
+    </div>
+    <div>
+        <span>密码：</span>
+        <input class="password" type="text">
+    </div>
+    <button class="loginBtn">登录</button>
+</div>
+
+<div class="list">
+    <table>
+        <thead>
+            <tr>
+                <th>玩家名称</th>
+                <th>玩家等级</th>
+                <th>等级上限</th>
+                <th>系统金币</th>
+                <th>消费等级</th>
+                <th>上次登录时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody class="list_data">
+
+        </tbody>
+    </table>
+</div>
+
+<div class="info">
+    <p>
+        <span>金币：</span>
+        <input type="text" id="sysGold">
+    </p>
+    <button class="submitData">确定修改</button>
+</div>
+
+<script language="JavaScript" type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script>
+    const HOST = "http://172.16.5.61:8088/";
+    let playerInfo = {};
+    let getData = (options)=> {
+        $.ajax({
+            type : options.type,    //请求类型
+            url : HOST + options.url,//请求的 URL地址
+            data: options.data?options.data:{},
+            contentType: "application/json",
+            // dataType : "jsonp",//返回的数据类型
+            headers: {
+                'login-token': localStorage.getItem('login-token')?localStorage.getItem('login-token'):""
+            },
+            success: function (data, textStatus, request) {
+                options.success&&options.success(data, textStatus, request);
+            },
+            error: function (data) {
+                options.error&&options.error(data);
+                alert("网络错误")
+            }
+        });
+    }
+
+    //登录
+    $('.loginBtn').on('click', function (e) {
+        getData({
+            type: "post",
+            url: "api/login",
+            data: JSON.stringify({
+                phone: $('.name').val(),
+                password: $('.password').val()
+            }),
+            success: (data, textStatus, request)=>{
+                localStorage.setItem('login-token', request.getResponseHeader("login-token"))
+            }
+        })
+    })
+
+    //获取玩家列表
+    getData({
+        type: "get",
+        url: "api/player/list",
+        data: {
+            page: 1,
+            size: 10
+        },
+        success: (res)=>{
+            if(res.code == 200) {
+                $('.list').show();
+                let trHtml = '';
+                for (let i = 0; i < res.result.items.length; i++) {
+                    let item = res.result.items[i];
+                    trHtml += '<tr>';
+                    trHtml += '<td>' + item.playerName + '</td>';
+                    trHtml += '<td>' + item.playerLv + '</td>';
+                    trHtml += '<td>' + item.maxLv + '</td>';
+                    trHtml += '<td>' + item.sysGold + '</td>';
+                    trHtml += '<td>' + item.consumeLv + '</td>';
+                    trHtml += '<td>' + item.loginTime + '</td>';
+                    trHtml += '<td>' + (item.state == 0?'正常':item.state == 1?'删除中':'废除') + '</td>';
+                    trHtml += '<td class="operateTd" data='+ (JSON.stringify(item)) +'>修改</td>';
+                    trHtml += '</tr>';
+                }
+                $('.list_data').html(trHtml);
+            } else {
+                $('.login').show();
+            }
+        }
+    })
+    
+    //点击修改玩家数据
+    $(".list_data").on('click', 'td', function (e) {
+        let item = JSON.parse($(e.target).attr('data'))
+        console.log('玩家数据', item);
+        playerInfo = item;
+        $('#sysGold').val(item.sysGold);
+        $('.list').hide();
+        $('.info').show();
+    })
+
+    //确定修改玩家数据
+    $('.submitData').on('click', function (e) {
+        getData({
+            type: "post",
+            url: "api/player/update",
+            data: JSON.stringify({
+                playerId: playerInfo.playerId,
+                sysGold: $('#sysGold').val()
+            }),
+            success: (data, textStatus, request)=>{
+                console.log(data)
+            }
+        })
+    })
+</script>
+</body>
+</html>
