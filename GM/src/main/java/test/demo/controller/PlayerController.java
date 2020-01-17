@@ -45,6 +45,21 @@ public class PlayerController {
         return handler;
     }
 
+    //获取玩家详细信息
+    @RequestMapping(value = "/getInfoById", method = RequestMethod.GET)
+    public MsgHandler getInfo(Player player) throws Exception {
+        MsgHandler handler = new MsgHandler();
+        //判断是否为空-未传
+        if (StringUtils.isNull(player.getPlayerId())){
+            handler.setMessage("id is not found");
+            handler.setCode("400");
+            return handler;
+        }
+        handler.setResult(playerService.selectByPrimaryKey(player.getPlayerId()));
+        handler.setCode("200");
+        return handler;
+    }
+
     //变更玩家数据
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public MsgHandler updateData(@RequestBody Player player, ServletResponse response) throws Exception {

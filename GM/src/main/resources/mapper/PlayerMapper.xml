@@ -28,6 +28,10 @@
     <result column="default_pay" property="defaultPay" jdbcType="TINYINT" />
     <result column="serverName_serverId_playerId" property="servernameServeridPlayerid" jdbcType="VARCHAR" />
     <result column="gm_expires_time" property="gmExpiresTime" jdbcType="TIMESTAMP" />
+
+    <!-- 连表查询-根据id获取资源表数据 -->
+    <collection property="playerResource" column="player_id" select="test.demo.dao.PlayerResourceMapper.selectByPrimaryKey">
+    </collection>
   </resultMap>
   <sql id="Base_Column_List" >
     player_id, player_name, player_lv, max_lv, sys_gold, user_gold, user_id, consume_lv, 
@@ -36,7 +40,7 @@
     gm, default_pay, serverName_serverId_playerId, gm_expires_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from player
     where player_id = #{playerId,jdbcType=INTEGER}

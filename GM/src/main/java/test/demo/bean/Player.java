@@ -1,6 +1,9 @@
 package test.demo.bean;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Player extends BaseVo {
     private Integer playerId;
@@ -54,6 +57,16 @@ public class Player extends BaseVo {
     private String servernameServeridPlayerid;
 
     private Date gmExpiresTime;
+
+    private PlayerResource playerResource;
+
+    public PlayerResource getPlayerResource() {
+        return playerResource;
+    }
+
+    public void setPlayerResource(PlayerResource playerResource) {
+        this.playerResource = playerResource;
+    }
 
     public Integer getPlayerId() {
         return playerId;

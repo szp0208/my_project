@@ -2,7 +2,6 @@ package test.demo.service;
 
 import net.sf.json.JSONObject;
 
-import net.sf.json.JSONObject;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
@@ -33,6 +32,11 @@ public class PlayerService {
     //获取列表数据总数
     public int playerListCount(Player record){
         return playerMapper.playerListCount(record);
+    }
+
+    //根据id获取详情
+    public Object selectByPrimaryKey(Integer id) {
+        return playerMapper.selectByPrimaryKey(id);
     }
 
     //根据id变更玩家数据

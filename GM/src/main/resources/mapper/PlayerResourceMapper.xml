@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="test.demo.dao.PlayerResourceMapper" >
+  <resultMap id="BaseResultMap" type="test.demo.bean.PlayerResource" >
+    <id column="player_id" property="playerId" jdbcType="INTEGER" />
+    <result column="copper" property="copper" jdbcType="INTEGER" />
+    <result column="wood" property="wood" jdbcType="INTEGER" />
+    <result column="food" property="food" jdbcType="INTEGER" />
+    <result column="iron" property="iron" jdbcType="INTEGER" />
+    <result column="exp" property="exp" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="kfgz_version" property="kfgzVersion" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    player_id, copper, wood, food, iron, exp, update_time, kfgz_version
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from player_resource
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from player_resource
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="test.demo.bean.PlayerResource" >
+    insert into player_resource (player_id, copper, wood, 
+      food, iron, exp, update_time, 
+      kfgz_version)
+    values (#{playerId,jdbcType=INTEGER}, #{copper,jdbcType=INTEGER}, #{wood,jdbcType=INTEGER}, 
+      #{food,jdbcType=INTEGER}, #{iron,jdbcType=INTEGER}, #{exp,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{kfgzVersion,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="test.demo.bean.PlayerResource" >
+    insert into player_resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="playerId != null" >
+        player_id,
+      </if>
+      <if test="copper != null" >
+        copper,
+      </if>
+      <if test="wood != null" >
+        wood,
+      </if>
+      <if test="food != null" >
+        food,
+      </if>
+      <if test="iron != null" >
+        iron,
+      </if>
+      <if test="exp != null" >
+        exp,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="kfgzVersion != null" >
+        kfgz_version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="playerId != null" >
+        #{playerId,jdbcType=INTEGER},
+      </if>
+      <if test="copper != null" >
+        #{copper,jdbcType=INTEGER},
+      </if>
+      <if test="wood != null" >
+        #{wood,jdbcType=INTEGER},
+      </if>
+      <if test="food != null" >
+        #{food,jdbcType=INTEGER},
+      </if>
+      <if test="iron != null" >
+        #{iron,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null" >
+        #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kfgzVersion != null" >
+        #{kfgzVersion,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="test.demo.bean.PlayerResource" >
+    update player_resource
+    <set >
+      <if test="copper != null" >
+        copper = #{copper,jdbcType=INTEGER},
+      </if>
+      <if test="wood != null" >
+        wood = #{wood,jdbcType=INTEGER},
+      </if>
+      <if test="food != null" >
+        food = #{food,jdbcType=INTEGER},
+      </if>
+      <if test="iron != null" >
+        iron = #{iron,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null" >
+        exp = #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="kfgzVersion != null" >
+        kfgz_version = #{kfgzVersion,jdbcType=BIGINT},
+      </if>
+    </set>
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="test.demo.bean.PlayerResource" >
+    update player_resource
+    set copper = #{copper,jdbcType=INTEGER},
+      wood = #{wood,jdbcType=INTEGER},
+      food = #{food,jdbcType=INTEGER},
+      iron = #{iron,jdbcType=INTEGER},
+      exp = #{exp,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      kfgz_version = #{kfgzVersion,jdbcType=BIGINT}
+    where player_id = #{playerId,jdbcType=INTEGER}
+  </update>
+
+  <select id="getList" resultType="test.demo.bean.PlayerResource" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from player_resource
+    <if test="page != null and size != null">
+      LIMIT ${(page-1)*size},${size}
+    </if>
+  </select>
+  <select id="listCount" resultType="int" parameterType="java.lang.Integer">
+    select
+    count(*)
+    from player_resource
+  </select>
+</mapper>
